@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { Activity, Menu, X, Cpu } from "lucide-react";
+import { Activity, Menu, X, Cpu, ChevronDown } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "./lib/axios";
 
 
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [moreOpen, setMoreOpen] = useState(false);
 
   const toggleMobileMenu = () => setMobileMenuOpen((prev) => !prev);
   const closeMobileMenu = () => setMobileMenuOpen(false);
@@ -26,12 +27,19 @@ export default function App() {
     return enabledSections[section] ?? true;
   };
 
-  const navLinks = [
+  const primaryLinks = [
     { path: "/about", label: "About", key: "about" },
     { path: "/skills", label: "Skills", key: "skills" },
     { path: "/projects", label: "Projects", key: "projects" },
     { path: "/blogs", label: "Blogs", key: "blogs" },
     { path: "/contact", label: "Contact", key: "contact" },
+  ].filter(link => isSectionEnabled(link.key));
+
+  const moreLinks = [
+    { path: "/research", label: "Research", key: "research" },
+    { path: "/github", label: "GitHub", key: "github" },
+    { path: "/mentorship", label: "Mentorship", key: "mentorship" },
+    { path: "/resources", label: "Resources", key: "resources" },
     { path: "/assistant", label: "Assistant", key: "assistant" },
   ].filter(link => isSectionEnabled(link.key));
 
@@ -60,7 +68,7 @@ export default function App() {
           
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center gap-8">
-            {navLinks.map((link) => (
+            {primaryLinks.map((link) => (
               <NavLink 
                 key={link.path}
                 to={link.path} 
@@ -75,6 +83,41 @@ export default function App() {
                 {link.label}
               </NavLink>
             ))}
+
+            {/* "More" Overflow Dropdown */}
+            {moreLinks.length > 0 && (
+              <div className="relative">
+                <button 
+                  onClick={() => setMoreOpen(!moreOpen)}
+                  className="flex items-center gap-1 text-[13px] font-medium text-white/60 hover:text-white transition-colors cursor-pointer focus:outline-none"
+                >
+                  <span>More</span>
+                  <ChevronDown size={14} className={`transition-transform duration-200 ${moreOpen ? "rotate-180" : ""}`} />
+                </button>
+                
+                {moreOpen && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setMoreOpen(false)} />
+                    <div className="absolute right-0 top-full mt-3 w-40 bg-gradient-to-b from-[#17181C] to-[#0B0C0F] border border-white/[0.08] rounded-xl py-1.5 shadow-[0_10px_25px_rgba(0,0,0,0.45)] z-50">
+                      {moreLinks.map((link) => (
+                        <NavLink
+                          key={link.path}
+                          to={link.path}
+                          onClick={() => setMoreOpen(false)}
+                          className={({ isActive }) =>
+                            `block px-4 py-2 text-[13px] font-medium transition-colors ${
+                              isActive ? "text-white bg-white/5" : "text-white/60 hover:text-white hover:bg-white/[0.03]"
+                            }`
+                          }
+                        >
+                          {link.label}
+                        </NavLink>
+                      ))}
+                    </div>
+                  </>
+                )}
+              </div>
+            )}
           </nav>
 
           {/* Right CTA / Menu Toggle */}
@@ -105,13 +148,14 @@ export default function App() {
         {mobileMenuOpen && (
           <div className="lg:hidden absolute top-16 left-4 right-4 mt-2 bg-[#17181C] border border-white/[0.08] rounded-2xl p-6 shadow-[0_20px_40px_rgba(0,0,0,0.45)] backdrop-blur-lg animate-in slide-in-from-top duration-200 z-50">
             <nav className="flex flex-col space-y-4">
-              {navLinks.map((link) => (
+              {/* Primary Links */}
+              {primaryLinks.map((link) => (
                 <NavLink
                   key={link.path}
                   to={link.path}
                   onClick={closeMobileMenu}
                   className={({ isActive }) =>
-                    `py-2 text-[13px] font-medium transition-colors ${
+                    `py-1 text-[13px] font-medium transition-colors ${
                       isActive ? "text-white" : "text-white/60 hover:text-white"
                     }`
                   }
@@ -119,10 +163,32 @@ export default function App() {
                   {link.label}
                 </NavLink>
               ))}
+
+              {/* Mobile "More" Sections */}
+              {moreLinks.length > 0 && (
+                <div className="pt-2 border-t border-white/5 flex flex-col space-y-3">
+                  <span className="text-[10px] font-mono text-white/30 uppercase tracking-widest">// MORE SECTIONS</span>
+                  {moreLinks.map((link) => (
+                    <NavLink
+                      key={link.path}
+                      to={link.path}
+                      onClick={closeMobileMenu}
+                      className={({ isActive }) =>
+                        `py-1 text-[13px] font-medium transition-colors ${
+                          isActive ? "text-white" : "text-white/60 hover:text-white"
+                        }`
+                      }
+                    >
+                      {link.label}
+                    </NavLink>
+                  ))}
+                </div>
+              )}
+
               <Link
                 to="/admin"
                 onClick={closeMobileMenu}
-                className="w-full py-2.5 px-4 text-center rounded-full bg-gradient-to-b from-[#FFFFFF] to-[#E4E6EA] text-[#0B0C0F] text-[13px] font-semibold shadow-md block"
+                className="w-full py-2.5 px-4 text-center rounded-full bg-gradient-to-b from-[#FFFFFF] to-[#E4E6EA] text-[#0B0C0F] text-[13px] font-semibold shadow-md block !mt-6"
               >
                 SYSTEM ACCESS
               </Link>
@@ -176,6 +242,8 @@ export default function App() {
                 <Link to="/socials" className="hover:text-accent-finance transition-colors">SOCIALS GRID</Link>
                 <Link to="/mission" className="hover:text-accent-ai transition-colors">OUR MISSION</Link>
                 {isSectionEnabled("journey") && <Link to="/journey" className="hover:text-accent-finance transition-colors">MY JOURNEY</Link>}
+                {isSectionEnabled("achievements") && <Link to="/achievements" className="hover:text-accent-ai transition-colors">ACHIEVEMENTS</Link>}
+                {isSectionEnabled("resume") && <Link to="/resume" className="hover:text-accent-analytics transition-colors">MY RESUME</Link>}
                 <Link to="/settings" className="hover:text-accent-analytics transition-colors">SETTINGS</Link>
               </div>
             </div>
