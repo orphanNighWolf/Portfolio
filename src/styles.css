@@ -91,10 +91,34 @@ body {
 
 /* Motion-disabled override system */
 .motion-disabled .page-transition,
-.motion-disabled .stagger-container .stagger-item {
+.motion-disabled .stagger-container .stagger-item,
+html[data-reduced-motion="on"] .page-transition,
+html[data-reduced-motion="on"] .stagger-container .stagger-item,
+html[data-reduced-motion="on"] .marquee-track,
+html[data-reduced-motion="on"] .backdrop-blobs,
+html[data-reduced-motion="on"] .float-slow {
   opacity: 1 !important;
   animation: none !important;
   transform: none !important;
   transition: none !important;
 }
+
+/* Accessibility Focus-Visible glow for motion toggler */
+.motion-toggle:focus-visible {
+  outline: 2px solid #06b6d4 !important; /* cyan-500 */
+  outline-offset: 2px;
+  box-shadow: 0 0 0 4px rgba(6, 182, 212, 0.35) !important;
+}
+
+/* Global OS prefers-reduced-motion flatten system */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-delay: 0s !important;
+    animation-duration: 0s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 

@@ -1,6 +1,5 @@
 import { HeadContent, Scripts, createRootRoute, useLocation } from '@tanstack/react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { MotionProvider } from '../lib/motion-context'
 import { SoftBackdrop } from '../components/portfolio/SoftBackdrop'
 import { Shell } from '../components/portfolio/Shell'
 import { PageTransition } from '../components/portfolio/PageTransition'
@@ -49,14 +48,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
-          <MotionProvider>
-            <SoftBackdrop />
-            <Shell>
-              <ContentWrapper>
-                {children}
-              </ContentWrapper>
-            </Shell>
-          </MotionProvider>
+          <SoftBackdrop />
+          <Shell>
+            <ContentWrapper>
+              {children}
+            </ContentWrapper>
+          </Shell>
         </QueryClientProvider>
         <Scripts />
       </body>

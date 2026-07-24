@@ -1,11 +1,15 @@
 import { createFileRoute, Link } from '@tanstack/react-router'
 import { portfolioData } from '../lib/portfolio-data'
 import { ArrowRight, BarChart2, Database, Terminal, Cpu, ArrowUpRight } from 'lucide-react'
+import { useReducedMotion } from '../hooks/use-reduced-motion'
+import { DataConstellation } from '../components/portfolio/DataConstellation'
+import { StaticConstellation } from '../components/portfolio/StaticConstellation'
 
 export const Route = createFileRoute('/')({ component: Home })
 
 function Home() {
   const { profile, projects, skills, blogs } = portfolioData;
+  const isReduced = useReducedMotion();
 
   const tracks = [
     {
@@ -41,8 +45,16 @@ function Home() {
     <div className="space-y-20 page-transition">
       {/* Hero Section */}
       <section className="text-center max-w-3xl mx-auto space-y-6 py-8">
-        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-accent-engineer/20 bg-accent-engineer/5 text-accent-engineer text-xs font-mono uppercase tracking-wider">
-          <Cpu size={12} className="animate-pulse" /> Platform Online // CS & Analytics
+        <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/80 bg-bg-surface text-text-secondary text-xs font-mono uppercase tracking-wider">
+          {isReduced ? (
+            <>
+              <Cpu size={12} /> Signal graph · static view / Calm
+            </>
+          ) : (
+            <>
+              <Cpu size={12} className="animate-pulse" /> Platform Online // CS & Analytics
+            </>
+          )}
         </div>
         <h1 className="text-4xl sm:text-6xl font-bold tracking-tight text-text-primary">
           Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-accent-engineer via-accent-scientist to-accent-analyst">{profile.name}</span>
@@ -53,6 +65,12 @@ function Home() {
         <p className="text-text-muted max-w-xl mx-auto text-sm leading-relaxed">
           {profile.bio}
         </p>
+        
+        {/* Interactive Constellation Graph */}
+        <div className="py-4">
+          {isReduced ? <StaticConstellation /> : <DataConstellation />}
+        </div>
+
         <div className="flex justify-center gap-4 pt-2">
           <Link
             to="/projects"

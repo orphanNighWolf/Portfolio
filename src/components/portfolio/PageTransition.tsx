@@ -1,14 +1,14 @@
 import { motion } from "motion/react";
-import { useMotion } from "../../lib/motion-context";
+import { useReducedMotion } from "../../hooks/use-reduced-motion";
 
 interface PageTransitionProps {
   children: React.ReactNode;
 }
 
 export function PageTransition({ children }: PageTransitionProps) {
-  const { motionEnabled } = useMotion();
+  const isReduced = useReducedMotion();
 
-  if (!motionEnabled) {
+  if (isReduced) {
     return <div className="w-full">{children}</div>;
   }
 

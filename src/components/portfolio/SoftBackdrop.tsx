@@ -1,7 +1,9 @@
-import { useMotion } from "../../lib/motion-context";
+import { useReducedMotion } from "../../hooks/use-reduced-motion";
 
 export function SoftBackdrop() {
-  const { motionEnabled } = useMotion();
+  const isReduced = useReducedMotion();
+
+  const animateClass = !isReduced ? "animate-pulse" : "";
 
   return (
     <div className="fixed inset-0 z-[-10] overflow-hidden pointer-events-none bg-bg-base">
@@ -18,9 +20,7 @@ export function SoftBackdrop() {
       <div className="absolute inset-0">
         {/* Blob 1: Terracotta Tint / Warm Pink */}
         <div 
-          className={`absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-accent-terracotta/10 blur-[120px] transition-transform duration-[8000ms] ${
-            motionEnabled ? "animate-pulse" : ""
-          }`}
+          className={`absolute top-[-10%] left-[-10%] w-[50vw] h-[50vw] rounded-full bg-accent-terracotta/10 blur-[120px] transition-transform duration-[8000ms] ${animateClass}`}
           style={{
             animationDuration: "12s"
           }}
@@ -28,9 +28,7 @@ export function SoftBackdrop() {
 
         {/* Blob 2: Analyst Green / Soft Emerald */}
         <div 
-          className={`absolute bottom-[-10%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-accent-analyst/5 blur-[100px] transition-transform duration-[10000ms] ${
-            motionEnabled ? "animate-pulse" : ""
-          }`}
+          className={`absolute bottom-[-10%] right-[-10%] w-[45vw] h-[45vw] rounded-full bg-accent-analyst/5 blur-[100px] transition-transform duration-[10000ms] ${animateClass}`}
           style={{
             animationDuration: "16s",
             animationDelay: "2s"
@@ -39,9 +37,7 @@ export function SoftBackdrop() {
 
         {/* Blob 3: Scientist Violet */}
         <div 
-          className={`absolute top-[40%] right-[10%] w-[35vw] h-[35vw] rounded-full bg-accent-scientist/5 blur-[90px] transition-transform duration-[9000ms] ${
-            motionEnabled ? "animate-pulse" : ""
-          }`}
+          className={`absolute top-[40%] right-[10%] w-[35vw] h-[35vw] rounded-full bg-accent-scientist/5 blur-[90px] transition-transform duration-[9000ms] ${animateClass}`}
           style={{
             animationDuration: "14s",
             animationDelay: "1s"
@@ -50,9 +46,7 @@ export function SoftBackdrop() {
 
         {/* Blob 4: Engineer Blue */}
         <div 
-          className={`absolute bottom-[20%] left-[10%] w-[35vw] h-[35vw] rounded-full bg-accent-engineer/5 blur-[90px] transition-transform duration-[9000ms] ${
-            motionEnabled ? "animate-pulse" : ""
-          }`}
+          className={`absolute bottom-[20%] left-[10%] w-[35vw] h-[35vw] rounded-full bg-accent-engineer/5 blur-[90px] transition-transform duration-[9000ms] ${animateClass}`}
           style={{
             animationDuration: "15s",
             animationDelay: "3s"

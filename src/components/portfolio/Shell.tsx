@@ -1,14 +1,16 @@
 import { Link } from "@tanstack/react-router";
 import { Sparkles, Zap, Menu, X } from "lucide-react";
 import { useState } from "react";
-import { useMotion } from "../../lib/motion-context";
+import { useReducedMotion, useReducedMotionOverride } from "../../hooks/use-reduced-motion";
 
 interface ShellProps {
   children: React.ReactNode;
 }
 
 export function Shell({ children }: ShellProps) {
-  const { motionEnabled, setMotionEnabled } = useMotion();
+  const isReduced = useReducedMotion();
+  const [override, setOverride] = useReducedMotionOverride();
+  const [liveAnnouncement, setLiveAnnouncement] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
 
   const navItems = [
@@ -22,7 +24,7 @@ export function Shell({ children }: ShellProps) {
   ];
 
   return (
-    <div className={`min-h-screen flex flex-col font-sans ${motionEnabled ? "" : "motion-disabled"}`}>
+    <div className={`min-h-screen flex flex-col font-sans ${isReduced ? "motion-disabled" : ""}`}>
       {/* Floating Pill Nav fixed top center */}
       <header className="fixed top-6 left-0 right-0 z-50 px-4 max-w-4xl mx-auto">
         <div className="paper-elevated rounded-full h-14 px-6 flex items-center justify-between shadow-[0_12px_40px_rgba(23,23,23,0.04)] border border-border/80">
@@ -55,14 +57,24 @@ export function Shell({ children }: ShellProps) {
 
           {/* Right Controls */}
           <div className="flex items-center gap-3">
-            {/* Motion toggle switch */}
+            {/* Motion toggle button in the nav */}
             <button
-              onClick={() => setMotionEnabled(!motionEnabled)}
-              title={motionEnabled ? "Cinematic Motion Enabled" : "Reduced Motion Enabled"}
-              className="p-2 rounded-full hover:bg-black/5 text-text-secondary hover:text-text-primary transition-colors cursor-pointer focus:outline-none"
+              onClick={() => {
+                const nextVal = isReduced ? "off" : "on";
+                setOverride(nextVal);
+                setLiveAnnouncement(nextVal === "on" ? "Animations reduced" : "Animations enabled");
+              }}
+              aria-pressed={isReduced}
+              aria-label={isReduced ? "Enable animations" : "Reduce animations"}
+              className="motion-toggle p-2 rounded-full hover:bg-black/[0.04] text-text-secondary hover:text-text-primary transition-colors cursor-pointer focus:outline-none"
             >
-              {motionEnabled ? <Sparkles size={16} /> : <Zap size={16} />}
+              <span aria-hidden="true">
+                {isReduced ? <Zap size={16} /> : <Sparkles size={16} />}
+              </span>
             </button>
+            <span className="sr-only" aria-live="polite" aria-atomic="true">
+              {liveAnnouncement}
+            </span>
 
             {/* Terracotta "Say hi" CTA button */}
             <Link
