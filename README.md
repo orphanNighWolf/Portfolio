@@ -1,36 +1,66 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Portfolio Platform Monorepo
 
-## Getting Started
+This project is a monorepo setup for a portfolio platform, structured into a client-server architecture using **npm workspaces**.
 
-First, run the development server:
+## Folder Structure
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+portfolio/
+├── package.json (Monorepo root)
+├── README.md
+├── .gitignore
+├── client/          # Frontend application (React + Vite + TS)
+│   ├── package.json
+│   ├── tsconfig.json
+│   ├── vite.config.ts
+│   ├── src/
+│   │   ├── main.tsx
+│   │   ├── App.tsx  # Layout Shell (Navbar, Footer, Route Outlet)
+│   │   ├── routes.tsx
+│   │   ├── lib/
+│   │   └── store/
+│   └── .env.example
+└── server/          # Backend API server (Express + Node + TS + MongoDB)
+    ├── package.json
+    ├── tsconfig.json
+    ├── src/
+    │   ├── index.ts # Process runner & server initialization
+    │   ├── app.ts   # Express application middleware & module registry
+    │   ├── config/  # db connection with retry, resend & cloudinary wrappers
+    │   ├── middleware/
+    │   └── modules/ # Feature-based modules (health, auth schemas)
+    └── .env.example
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Running the Applications
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. Install dependencies from the root directory:
+   ```bash
+   npm install
+   ```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+2. Start both the client and server development environments simultaneously:
+   ```bash
+   npm run dev
+   ```
+   - Frontend runs on: `http://localhost:5173`
+   - Backend API runs on: `http://localhost:5000`
 
-## Learn More
+3. Build the applications:
+   ```bash
+   npm run build
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+4. Lint the codebase:
+   ```bash
+   npm run lint
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. Run test suites:
+   ```bash
+   npm run test
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Environment Setup
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Ensure you configure the `.env` files in both the `client/` and `server/` directories using their respective `.env.example` templates as guides.
