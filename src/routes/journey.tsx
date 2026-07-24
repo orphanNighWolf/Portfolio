@@ -2,7 +2,19 @@ import { createFileRoute } from '@tanstack/react-router'
 import { portfolioData } from '../lib/portfolio-data'
 import { GraduationCap, Briefcase, Zap } from 'lucide-react'
 
-export const Route = createFileRoute('/journey')({ component: JourneyPage })
+export const Route = createFileRoute('/journey')({
+  component: JourneyPage,
+  head: () => ({
+    meta: [
+      { title: "Journey | Aniket Saini" },
+      { name: "description", content: "Chronological milestone log of key career jumps, academic degrees, and deployments." },
+      { property: "og:title", content: "Journey | Aniket Saini" },
+      { property: "og:description", content: "Chronological milestone log of key career jumps, academic degrees, and deployments." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" }
+    ]
+  })
+})
 
 function JourneyPage() {
   const { journey } = portfolioData;
@@ -10,52 +22,57 @@ function JourneyPage() {
   const getIcon = (type: "academic" | "career" | "project") => {
     switch (type) {
       case "academic":
-        return <GraduationCap size={16} className="text-accent-scientist" />;
+        return <GraduationCap size={14} className="text-accent-scientist" />;
       case "career":
-        return <Briefcase size={16} className="text-accent-engineer" />;
+        return <Briefcase size={14} className="text-accent-engineer" />;
       default:
-        return <Zap size={16} className="text-accent-analyst" />;
+        return <Zap size={14} className="text-accent-analyst" />;
     }
   };
 
   return (
-    <div className="space-y-12 page-transition">
+    <div className="max-w-3xl mx-auto space-y-12 page-transition">
       {/* Header */}
       <section className="space-y-4">
         <div className="space-y-1 border-b border-border/40 pb-4">
-          <h1 className="text-3xl font-bold tracking-tight text-text-primary">Journey Milestones</h1>
-          <span className="text-xs font-mono text-text-muted block">// TRACKING_ACADEMIC_AND_CAREER_MILESTONES</span>
+          <h1 className="text-3xl font-serif font-bold tracking-tight text-text-primary">Journey</h1>
+          <span className="text-xs font-mono text-text-muted block uppercase tracking-wider">// TRACKING_ACADEMIC_AND_CAREER_MILESTONES</span>
         </div>
-        <p className="text-text-secondary text-sm max-w-2xl leading-relaxed">
-          Historical overview of key academic achievements, career jumps, and milestone project deployments.
+        <p className="text-text-secondary text-sm leading-relaxed">
+          Chronological milestone logs mapping academic degrees, engineering advancements, and critical systems deployments.
         </p>
       </section>
 
-      {/* Grid of milestones */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-container">
+      {/* Chronological Milestone log: left mono date, right serif title + description */}
+      <div className="divide-y divide-border/60 border-t border-b border-border/60 stagger-container">
         {journey.map((item, idx) => (
           <div
             key={idx}
-            className="p-6 rounded-2xl border border-border/60 bg-bg-surface flex flex-col justify-between hover:border-border transition-all duration-300 stagger-item"
+            className="grid grid-cols-1 md:grid-cols-12 gap-6 py-8 items-start hover:bg-bg-elevated/20 transition-colors stagger-item"
           >
-            <div className="space-y-4">
-              <div className="flex justify-between items-center">
-                <span className="text-lg font-bold text-accent-engineer font-mono">{item.year}</span>
-                <div className="p-2 rounded-lg bg-bg-elevated">
-                  {getIcon(item.type)}
-                </div>
+            {/* Left Column: Monospace date & marker */}
+            <div className="md:col-span-3 flex items-center md:flex-col md:items-start gap-3">
+              <span className="text-lg font-bold text-accent-terracotta font-mono leading-none">
+                {item.year}
+              </span>
+              <div className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full border border-border bg-bg-surface text-text-muted text-[8px] font-mono uppercase tracking-widest leading-none">
+                {getIcon(item.type)} {item.type}
               </div>
-
-              <div className="space-y-1">
-                <h3 className="text-md font-bold text-text-primary">{item.title}</h3>
-                <span className="text-xs font-mono text-text-muted">{item.subtitle}</span>
-              </div>
-
-              <p className="text-xs text-text-secondary leading-relaxed">{item.description}</p>
             </div>
-            <div className="pt-4 mt-4 border-t border-border/20 flex items-center justify-between text-[10px] font-mono text-text-muted uppercase">
-              <span>status: achieved</span>
-              <span>type: {item.type}</span>
+
+            {/* Right Column: Serif Title & Body content */}
+            <div className="md:col-span-9 space-y-2">
+              <div>
+                <h3 className="text-lg font-serif font-bold text-text-primary leading-tight">
+                  {item.title}
+                </h3>
+                <span className="text-xs font-mono text-text-muted uppercase tracking-wider block pt-0.5">
+                  // {item.subtitle}
+                </span>
+              </div>
+              <p className="text-xs text-text-secondary leading-relaxed max-w-xl">
+                {item.description}
+              </p>
             </div>
           </div>
         ))}
@@ -63,3 +80,4 @@ function JourneyPage() {
     </div>
   );
 }
+export default JourneyPage;

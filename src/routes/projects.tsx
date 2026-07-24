@@ -1,105 +1,137 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { portfolioData } from '../lib/portfolio-data'
 import { useState } from 'react'
-import { Github, Folder, ExternalLink } from 'lucide-react'
+import { Github, Folder, ExternalLink, Search } from 'lucide-react'
 
-export const Route = createFileRoute('/projects')({ component: Projects })
+export const Route = createFileRoute('/projects')({
+  component: ProjectsPage,
+  head: () => ({
+    meta: [
+      { title: "Projects | Aniket Saini" },
+      { name: "description", content: "Filterable and searchable portfolio of systems, databases, and predictive models." },
+      { property: "og:title", content: "Projects | Aniket Saini" },
+      { property: "og:description", content: "Filterable and searchable portfolio of systems, databases, and predictive models." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" }
+    ]
+  })
+})
 
-function Projects() {
+function ProjectsPage() {
   const { projects } = portfolioData;
   const [filter, setFilter] = useState<"All" | "Analyst" | "Engineer" | "Scientist">("All");
+  const [searchQuery, setSearchQuery] = useState("");
 
-  const filteredProjects = filter === "All" 
-    ? projects 
-    : projects.filter(p => p.category === filter);
+  const filteredProjects = projects.filter((project) => {
+    const matchesCategory = filter === "All" || project.category === filter;
+    const matchesSearch = 
+      project.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      project.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
+    
+    return matchesCategory && matchesSearch;
+  });
 
   return (
     <div className="space-y-12 page-transition">
       {/* Header */}
       <section className="space-y-4">
         <div className="space-y-1 border-b border-border/40 pb-4">
-          <h1 className="text-3xl font-bold tracking-tight text-text-primary">Projects & Showcases</h1>
-          <span className="text-xs font-mono text-text-muted block">// SELECTING_TECHNICAL_IMPLEMENTATIONS</span>
+          <h1 className="text-3xl font-serif font-bold tracking-tight text-text-primary">Projects</h1>
+          <span className="text-xs font-mono text-text-muted block uppercase tracking-wider">// SELECTING_TECHNICAL_IMPLEMENTATIONS</span>
         </div>
         <p className="text-text-secondary text-sm max-w-2xl leading-relaxed">
-          Explore a curated selection of systems and analytical platforms constructed across the data track.
+          Curated index of analytical pipelines, database schemas, and ML pipelines constructed across the development track.
         </p>
       </section>
 
-      {/* Filter Tabs */}
-      <div className="flex flex-wrap gap-2">
-        {(["All", "Analyst", "Engineer", "Scientist"] as const).map((cat) => {
-          const isActive = filter === cat;
-          const activeStyle = cat === "Analyst" 
-            ? "bg-accent-analyst text-white shadow-sm" 
-            : cat === "Engineer" 
-            ? "bg-accent-engineer text-white shadow-sm" 
-            : cat === "Scientist" 
-            ? "bg-accent-scientist text-white shadow-sm" 
-            : "bg-text-primary text-white shadow-sm";
+      {/* Controls Bar (Filter + Search) */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        {/* Category Filters */}
+        <div className="flex flex-wrap gap-2">
+          {(["All", "Analyst", "Engineer", "Scientist"] as const).map((cat) => {
+            const isActive = filter === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setFilter(cat)}
+                className={`px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
+                  isActive 
+                    ? "bg-accent-terracotta text-white shadow-sm" 
+                    : "bg-bg-surface border border-border text-text-secondary hover:bg-bg-elevated hover:text-text-primary"
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
 
-          return (
-            <button
-              key={cat}
-              onClick={() => setFilter(cat)}
-              className={`px-4 py-2 rounded-xl text-xs font-mono uppercase tracking-wider transition-all cursor-pointer ${
-                isActive 
-                  ? activeStyle 
-                  : "bg-bg-surface border border-border text-text-secondary hover:bg-bg-elevated hover:text-text-primary"
-              }`}
-            >
-              {cat}
-            </button>
-          );
-        })}
+        {/* Search Input Box */}
+        <div className="relative max-w-xs w-full">
+          <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-text-muted pointer-events-none">
+            <Search size={14} />
+          </span>
+          <input
+            type="text"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            placeholder="Search projects or tags..."
+            className="w-full bg-bg-surface border border-border rounded-xl pl-9 pr-4 py-2 text-xs text-text-primary focus:border-accent-terracotta focus:outline-none transition-colors"
+          />
+        </div>
       </div>
 
-      {/* Projects Grid */}
+      {/* Projects Grid of flat paper cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-container">
         {filteredProjects.map((project) => {
           const isScientist = project.category === "Scientist";
           const isEngineer = project.category === "Engineer";
-          const accentColor = isScientist ? "text-accent-scientist" : isEngineer ? "text-accent-engineer" : "text-accent-analyst";
-          const accentBorder = isScientist ? "hover:border-accent-scientist/40" : isEngineer ? "hover:border-accent-engineer/40" : "hover:border-accent-analyst/40";
-          const accentBg = isScientist ? "bg-accent-scientist/5" : isEngineer ? "bg-accent-engineer/5" : "bg-accent-analyst/5";
+          const accentLabel = isScientist 
+            ? "text-accent-scientist border-accent-scientist/20 bg-accent-scientist/5" 
+            : isEngineer 
+            ? "text-accent-engineer border-accent-engineer/20 bg-accent-engineer/5" 
+            : "text-accent-analyst border-accent-analyst/20 bg-accent-analyst/5";
           
           return (
             <div
               key={project.id}
-              className={`p-6 rounded-2xl border border-border/60 bg-bg-surface flex flex-col justify-between transition-all duration-300 hover:shadow-md stagger-item ${accentBorder}`}
+              className="p-6 rounded-2xl border border-border bg-bg-surface flex flex-col justify-between hover:border-text-primary/10 transition-all duration-300 shadow-[0_4px_20px_rgba(23,23,23,0.01)] stagger-item"
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
-                  <div className={`p-2 rounded-lg ${accentBg} ${accentColor}`}>
+                  <div className="p-2 rounded-xl bg-bg-elevated border border-border text-text-secondary">
                     <Folder size={18} />
                   </div>
-                  <span className={`text-[9px] font-mono font-bold tracking-wider px-2.5 py-0.5 rounded-full uppercase border border-current bg-transparent ${accentColor}`}>
+                  <span className={`text-[9px] font-mono font-bold tracking-wider px-2.5 py-0.5 rounded border uppercase ${accentLabel}`}>
                     {project.category}
                   </span>
                 </div>
                 
-                <h3 className="text-md font-bold text-text-primary">{project.title}</h3>
+                <h3 className="text-md font-serif font-bold text-text-primary">{project.title}</h3>
                 <p className="text-xs text-text-secondary leading-relaxed">{project.description}</p>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-border/20">
+              <div className="pt-6 mt-6 border-t border-border/40">
+                {/* Tags in Monospace */}
                 <div className="flex flex-wrap gap-1.5 mb-4">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="text-[9px] font-mono text-text-muted bg-bg-elevated px-2 py-0.5 rounded">
+                    <span key={tag} className="text-[9px] font-mono text-text-muted bg-bg-elevated px-2 py-0.5 rounded border border-border/40">
                       #{tag.toLowerCase()}
                     </span>
                   ))}
                 </div>
 
-                <div className="flex gap-3 text-xs font-mono">
+                {/* External repository links */}
+                <div className="flex gap-4 text-xs font-mono">
                   {project.githubUrl && (
                     <a
                       href={project.githubUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center gap-1 text-text-secondary hover:text-text-primary transition-colors"
+                      className="flex items-center gap-1 text-text-secondary hover:text-accent-terracotta transition-colors"
                     >
-                      <Github size={14} /> Repository
+                      <Github size={13} /> Repository
                     </a>
                   )}
                   {project.demoUrl && (
@@ -107,9 +139,9 @@ function Projects() {
                       href={project.demoUrl}
                       target="_blank"
                       rel="noreferrer"
-                      className="flex items-center gap-1 text-text-secondary hover:text-text-primary transition-colors"
+                      className="flex items-center gap-1 text-text-secondary hover:text-accent-terracotta transition-colors"
                     >
-                      <ExternalLink size={14} /> Live Demo
+                      <ExternalLink size={13} /> Live Demo
                     </a>
                   )}
                 </div>
@@ -121,3 +153,4 @@ function Projects() {
     </div>
   );
 }
+export default ProjectsPage;

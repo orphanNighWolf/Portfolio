@@ -1,60 +1,67 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { portfolioData } from '../lib/portfolio-data'
-import { Calendar, Clock, ArrowRight } from 'lucide-react'
+import { Calendar, Clock, ArrowUpRight } from 'lucide-react'
 
-export const Route = createFileRoute('/writing')({ component: WritingPage })
+export const Route = createFileRoute('/writing')({
+  component: WritingPage,
+  head: () => ({
+    meta: [
+      { title: "Writing | Aniket Saini" },
+      { name: "description", content: "Analysis notes and articles on data engineering pipelines, ML experiments, and database architectures." },
+      { property: "og:title", content: "Writing | Aniket Saini" },
+      { property: "og:description", content: "Analysis notes and articles on data engineering pipelines, ML experiments, and database architectures." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" }
+    ]
+  })
+})
 
 function WritingPage() {
   const { blogs } = portfolioData;
 
   return (
-    <div className="space-y-12 page-transition">
+    <div className="max-w-2xl mx-auto space-y-12 page-transition">
       {/* Header */}
       <section className="space-y-4">
         <div className="space-y-1 border-b border-border/40 pb-4">
-          <h1 className="text-3xl font-bold tracking-tight text-text-primary">Writing & Notes</h1>
-          <span className="text-xs font-mono text-text-muted block">// ACCESSING_KNOWLEDGE_STREAM</span>
+          <h1 className="text-3xl font-serif font-bold tracking-tight text-text-primary">Writing</h1>
+          <span className="text-xs font-mono text-text-muted block uppercase tracking-wider">// ACCESSING_KNOWLEDGE_STREAM</span>
         </div>
-        <p className="text-text-secondary text-sm max-w-2xl leading-relaxed">
-          Deep-dives into data pipeline debugging, ML architecture experiments, and custom analytics integrations.
+        <p className="text-text-secondary text-sm leading-relaxed">
+          Technical deep-dives and logs documenting custom analytical setups, pipelines, and research findings.
         </p>
       </section>
 
-      {/* Blogs list */}
-      <div className="space-y-6 stagger-container">
+      {/* Vertical list of analysis notes - no cards, just clean list items with dividers */}
+      <div className="divide-y divide-border/60 stagger-container">
         {blogs.map((blog) => (
-          <div
-            key={blog.id}
-            className="p-6 rounded-2xl border border-border/60 bg-bg-surface flex flex-col justify-between hover:border-border transition-all duration-300 stagger-item"
+          <article 
+            key={blog.id} 
+            className="py-8 first:pt-0 last:pb-0 space-y-3.5 hover:opacity-[0.98] transition-opacity stagger-item"
           >
-            <div className="space-y-4">
-              <div className="flex justify-between items-center text-[10px] font-mono text-text-muted">
-                <span className="px-2 py-0.5 rounded border border-border bg-bg-elevated/40">
-                  {blog.category}
-                </span>
-                <div className="flex items-center gap-3">
-                  <span className="flex items-center gap-1"><Calendar size={11} /> {blog.date}</span>
-                  <span className="flex items-center gap-1"><Clock size={11} /> {blog.readingTime}</span>
-                </div>
-              </div>
-              
-              <h2 className="text-xl font-bold text-text-primary hover:text-accent-terracotta transition-colors cursor-pointer">
-                {blog.title}
-              </h2>
-              <p className="text-xs text-text-secondary leading-relaxed max-w-3xl">
-                {blog.excerpt}
-              </p>
+            <div className="flex flex-wrap items-center gap-3 text-[10px] font-mono text-text-muted uppercase tracking-wider">
+              <span className="text-accent-terracotta font-semibold">// {blog.category}</span>
+              <span className="w-1 h-1 rounded-full bg-border" />
+              <span className="flex items-center gap-1"><Calendar size={11} /> {blog.date}</span>
+              <span className="w-1 h-1 rounded-full bg-border" />
+              <span className="flex items-center gap-1"><Clock size={11} /> {blog.readingTime}</span>
             </div>
 
-            <div className="pt-6 mt-6 border-t border-border/20 flex justify-between items-center">
-              <div className="text-xs text-text-muted">
-                Author: Aniket Saini
-              </div>
-              <button className="text-xs text-accent-terracotta flex items-center gap-1 font-mono font-bold cursor-pointer hover:translate-x-0.5 transition-transform bg-transparent border-none">
-                READ ARTICLE <ArrowRight size={12} />
+            <h2 className="text-xl font-serif font-bold text-text-primary hover:text-accent-terracotta transition-colors cursor-pointer leading-snug">
+              {blog.title}
+            </h2>
+
+            {/* Dek (Description excerpt) */}
+            <p className="text-xs text-text-secondary leading-relaxed max-w-xl">
+              {blog.excerpt}
+            </p>
+
+            <div className="pt-2">
+              <button className="text-[10px] text-accent-terracotta flex items-center gap-1 font-mono font-bold cursor-pointer hover:translate-x-0.5 transition-transform bg-transparent border-none">
+                READ NOTES <ArrowUpRight size={12} />
               </button>
             </div>
-          </div>
+          </article>
         ))}
       </div>
     </div>

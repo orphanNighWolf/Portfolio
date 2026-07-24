@@ -5,7 +5,19 @@ import { useReducedMotion } from '../hooks/use-reduced-motion'
 import { DataConstellation } from '../components/portfolio/DataConstellation'
 import { StaticConstellation } from '../components/portfolio/StaticConstellation'
 
-export const Route = createFileRoute('/')({ component: Home })
+export const Route = createFileRoute('/')({
+  component: Home,
+  head: () => ({
+    meta: [
+      { title: "Aniket Saini | Data Portfolio" },
+      { name: "description", content: "Personal portfolio of Aniket Saini, master's student on a data analyst -> engineer -> scientist track." },
+      { property: "og:title", content: "Aniket Saini | Data Portfolio" },
+      { property: "og:description", content: "Personal portfolio of Aniket Saini, master's student on a data analyst -> engineer -> scientist track." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary_large_image" }
+    ]
+  })
+})
 
 function Home() {
   const { profile, projects, skills, blogs } = portfolioData;
