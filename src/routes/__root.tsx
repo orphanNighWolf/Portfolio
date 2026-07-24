@@ -1,6 +1,8 @@
 import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { PortfolioShell } from '../components/PortfolioShell'
+import { MotionProvider } from '../lib/motion-context'
+import { SoftBackdrop } from '../components/portfolio/SoftBackdrop'
+import { Shell } from '../components/portfolio/Shell'
 import appCss from '../styles.css?url'
 
 const queryClient = new QueryClient()
@@ -37,9 +39,12 @@ function RootDocument({ children }: { children: React.ReactNode }) {
       </head>
       <body>
         <QueryClientProvider client={queryClient}>
-          <PortfolioShell>
-            {children}
-          </PortfolioShell>
+          <MotionProvider>
+            <SoftBackdrop />
+            <Shell>
+              {children}
+            </Shell>
+          </MotionProvider>
         </QueryClientProvider>
         <Scripts />
       </body>
