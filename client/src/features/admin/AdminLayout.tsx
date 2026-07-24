@@ -65,7 +65,7 @@ export default function AdminLayout() {
     <div className="flex min-h-[calc(100vh-8rem)] gap-0 -mx-6 -my-12">
       {/* Sidebar */}
       <aside
-        className={`bg-[#0A0A0F] border-r border-white/5 flex flex-col shrink-0 transition-all duration-300 ${
+        className={`bg-admin-bg-aside border-r border-white/5 flex flex-col shrink-0 transition-all duration-300 ${
           collapsed ? "w-14" : "w-56"
         }`}
       >
@@ -130,3 +130,4 @@ export default function AdminLayout() {
     </div>
   );
 }
+

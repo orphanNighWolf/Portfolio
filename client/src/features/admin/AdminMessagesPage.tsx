@@ -108,7 +108,7 @@ export default function AdminMessagesPage() {
       <div className="grid lg:grid-cols-3 gap-6 items-start">
         {/* Messages List Panel */}
         <section className={`lg:col-span-2 space-y-4 ${selectedMessage ? "hidden lg:block" : ""}`}>
-          <div className="border border-white/5 bg-[#0E0E13]/20 rounded-xl overflow-hidden">
+          <div className="border border-white/5 bg-admin-bg-surface/20 rounded-xl overflow-hidden">
             <div className="divide-y divide-white/5">
               {messages.length === 0 ? (
                 <div className="p-8 text-center text-gray-500 italic">
@@ -137,7 +137,7 @@ export default function AdminMessagesPage() {
                           })}
                         </span>
                       </div>
-                      <h4 className={`text-xs truncate ${!msg.read ? "text-[#F7F5F0] font-bold" : "text-gray-400"}`}>
+                      <h4 className={`text-xs truncate ${!msg.read ? "text-admin-text font-bold" : "text-gray-400"}`}>
                         {msg.subject}
                       </h4>
                       <p className="text-[11px] text-gray-500 truncate leading-normal">
@@ -152,7 +152,7 @@ export default function AdminMessagesPage() {
                           e.stopPropagation();
                           toggleReadMutation.mutate({ id: msg._id, read: !msg.read });
                         }}
-                        className="p-1.5 bg-[#07070A] hover:bg-white/5 text-gray-400 hover:text-cyan-400 border border-white/10 rounded cursor-pointer transition-colors"
+                        className="p-1.5 bg-admin-bg-base hover:bg-white/5 text-gray-400 hover:text-cyan-400 border border-white/10 rounded cursor-pointer transition-colors"
                         title={msg.read ? "Mark as unread" : "Mark as read"}
                       >
                         {msg.read ? <MailOpen size={12} /> : <Mail size={12} />}
@@ -164,7 +164,7 @@ export default function AdminMessagesPage() {
                             deleteMessageMutation.mutate(msg._id);
                           }
                         }}
-                        className="p-1.5 bg-[#07070A] hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
+                        className="p-1.5 bg-admin-bg-base hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
                         title="Delete message"
                       >
                         <Trash2 size={12} />
@@ -202,7 +202,7 @@ export default function AdminMessagesPage() {
 
         {/* Message Details Panel */}
         {selectedMessage && (
-          <section className="bg-[#0E0E13]/30 border border-white/5 p-6 rounded-xl space-y-4 lg:col-span-1">
+          <section className="bg-admin-bg-surface/30 border border-white/5 p-6 rounded-xl space-y-4 lg:col-span-1">
             <div className="flex justify-between items-center border-b border-white/5 pb-3">
               <h3 className="text-xs font-bold text-cyan-400 uppercase tracking-widest">// VIEW_TRANSMISSION</h3>
               <button
@@ -216,18 +216,18 @@ export default function AdminMessagesPage() {
             <div className="space-y-4 text-xs">
               <div className="space-y-1">
                 <span className="text-[10px] text-gray-500 block uppercase font-bold">From</span>
-                <span className="text-[#F7F5F0] font-bold block">{selectedMessage.name}</span>
+                <span className="text-admin-text font-bold block">{selectedMessage.name}</span>
                 <span className="text-cyan-400 break-all">{selectedMessage.email}</span>
               </div>
 
               <div className="space-y-1">
                 <span className="text-[10px] text-gray-500 block uppercase font-bold">Subject</span>
-                <span className="text-[#F7F5F0] font-bold block">{selectedMessage.subject}</span>
+                <span className="text-admin-text font-bold block">{selectedMessage.subject}</span>
               </div>
 
               <div className="space-y-1">
                 <span className="text-[10px] text-gray-500 block uppercase font-bold">Message Content</span>
-                <div className="bg-[#07070A] border border-white/10 p-4 rounded-lg text-gray-300 whitespace-pre-wrap leading-relaxed">
+                <div className="bg-admin-bg-base border border-white/10 p-4 rounded-lg text-gray-300 whitespace-pre-wrap leading-relaxed">
                   {selectedMessage.message}
                 </div>
               </div>
@@ -259,3 +259,4 @@ export default function AdminMessagesPage() {
     </div>
   );
 }
+

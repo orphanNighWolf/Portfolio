@@ -96,7 +96,7 @@ export default function AdminMissionPage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6 bg-[#0E0E13]/30 border border-white/5 rounded-xl p-6">
+      <form onSubmit={handleSubmit} className="space-y-6 bg-admin-bg-surface/30 border border-white/5 rounded-xl p-6">
         <div className="space-y-1">
           <label className="text-xs text-gray-400 uppercase">Career Mission Statement</label>
           <textarea
@@ -104,7 +104,7 @@ export default function AdminMissionPage() {
             rows={3}
             value={careerMission}
             onChange={(e) => setCareerMission(e.target.value)}
-            className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+            className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
           />
         </div>
 
@@ -115,7 +115,7 @@ export default function AdminMissionPage() {
             rows={3}
             value={vision}
             onChange={(e) => setVision(e.target.value)}
-            className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+            className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
           />
         </div>
 
@@ -126,7 +126,7 @@ export default function AdminMissionPage() {
               rows={4}
               value={longTermGoalsStr}
               onChange={(e) => setLongTermGoalsStr(e.target.value)}
-              className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+              className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
               placeholder="Deploy edge intelligence solutions&#10;Lead machine learning researchers"
             />
           </div>
@@ -136,7 +136,7 @@ export default function AdminMissionPage() {
               rows={4}
               value={valuesStr}
               onChange={(e) => setValuesStr(e.target.value)}
-              className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+              className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
               placeholder="Open Source Advocacy&#10;Rigorous Validation"
             />
           </div>
@@ -148,7 +148,7 @@ export default function AdminMissionPage() {
             rows={2}
             value={currentLearningStr}
             onChange={(e) => setCurrentLearningStr(e.target.value)}
-            className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+            className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
             placeholder="Rust Compiler, CUDA kernels"
           />
         </div>
@@ -162,7 +162,7 @@ export default function AdminMissionPage() {
             rows={6}
             value={futureRoadmapJson}
             onChange={(e) => setFutureRoadmapJson(e.target.value)}
-            className="w-full bg-[#07070A] border border-white/10 rounded p-3 text-cyan-400 text-xs font-mono focus:border-cyan-400 focus:outline-none"
+            className="w-full bg-admin-bg-base border border-white/10 rounded p-3 text-cyan-400 text-xs font-mono focus:border-cyan-400 focus:outline-none"
           />
         </div>
 
@@ -177,3 +177,4 @@ export default function AdminMissionPage() {
     </div>
   );
 }
+

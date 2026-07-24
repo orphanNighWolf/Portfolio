@@ -136,7 +136,7 @@ export default function AdminResumePage() {
           </button>
         </div>
 
-        <div className="bg-[#07070A] border border-white/10 rounded-xl overflow-hidden shadow-inner">
+        <div className="bg-admin-bg-base border border-white/10 rounded-xl overflow-hidden shadow-inner">
           <textarea
             rows={22}
             value={jsonText}
@@ -157,3 +157,4 @@ export default function AdminResumePage() {
     </div>
   );
 }
+

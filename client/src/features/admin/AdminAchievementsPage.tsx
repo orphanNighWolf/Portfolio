@@ -184,7 +184,7 @@ export default function AdminAchievementsPage() {
       )}
 
       {isFormOpen ? (
-        <div className="bg-[#0E0E13]/30 border border-white/5 rounded-xl p-6 space-y-6">
+        <div className="bg-admin-bg-surface/30 border border-white/5 rounded-xl p-6 space-y-6">
           <div className="flex justify-between items-center border-b border-white/5 pb-3">
             <h2 className="text-xs font-bold text-cyan-400 uppercase tracking-widest">
               {editingId ? "Edit Award Details" : "Create Award Entry"}
@@ -204,7 +204,7 @@ export default function AdminAchievementsPage() {
                 <select
                   value={type}
                   onChange={(e) => setType(e.target.value as AchievementDoc["type"])}
-                  className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                 >
                   <option value="certificate">Certificate</option>
                   <option value="hackathon">Hackathon</option>
@@ -221,7 +221,7 @@ export default function AdminAchievementsPage() {
                   required
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                 />
               </div>
             </div>
@@ -234,7 +234,7 @@ export default function AdminAchievementsPage() {
                   required
                   value={organization}
                   onChange={(e) => setOrganization(e.target.value)}
-                  className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                 />
               </div>
               <div className="space-y-1">
@@ -244,7 +244,7 @@ export default function AdminAchievementsPage() {
                   required
                   value={date}
                   onChange={(e) => setDate(e.target.value)}
-                  className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                 />
               </div>
             </div>
@@ -256,7 +256,7 @@ export default function AdminAchievementsPage() {
                   type="text"
                   value={link}
                   onChange={(e) => setLink(e.target.value)}
-                  className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                 />
               </div>
               <div className="space-y-2">
@@ -289,7 +289,7 @@ export default function AdminAchievementsPage() {
                 rows={3}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
               />
             </div>
 
@@ -303,7 +303,7 @@ export default function AdminAchievementsPage() {
           </form>
         </div>
       ) : (
-        <div className="border border-white/5 bg-[#0E0E13]/20 rounded-xl overflow-hidden">
+        <div className="border border-white/5 bg-admin-bg-surface/20 rounded-xl overflow-hidden">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="border-b border-white/5 bg-white/5 text-gray-400 uppercase">
@@ -316,14 +316,14 @@ export default function AdminAchievementsPage() {
             <tbody className="divide-y divide-white/5">
               {achievements?.map((item) => (
                 <tr key={item._id} className="hover:bg-white/5 transition-colors">
-                  <td className="p-3 font-bold text-[#F7F5F0]">{item.title}</td>
+                  <td className="p-3 font-bold text-admin-text">{item.title}</td>
                   <td className="p-3 text-gray-400">{item.organization}</td>
                   <td className="p-3 text-cyan-400 uppercase">{item.type}</td>
                   <td className="p-3 text-right">
                     <div className="flex justify-end gap-2">
                       <button
                         onClick={() => handleEditInit(item)}
-                        className="p-1.5 bg-[#07070A] hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 border border-white/10 rounded cursor-pointer transition-colors"
+                        className="p-1.5 bg-admin-bg-base hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 border border-white/10 rounded cursor-pointer transition-colors"
                       >
                         <Edit2 size={12} />
                       </button>
@@ -333,7 +333,7 @@ export default function AdminAchievementsPage() {
                             deleteMutation.mutate(item._id);
                           }
                         }}
-                        className="p-1.5 bg-[#07070A] hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
+                        className="p-1.5 bg-admin-bg-base hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
                       >
                         <Trash2 size={12} />
                       </button>
@@ -348,3 +348,4 @@ export default function AdminAchievementsPage() {
     </div>
   );
 }
+

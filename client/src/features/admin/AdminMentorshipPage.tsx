@@ -215,7 +215,7 @@ export default function AdminMentorshipPage() {
         </div>
 
         {/* Tab switch */}
-        <div className="flex gap-2 bg-[#0E0E13]/60 p-1 border border-white/5 rounded">
+        <div className="flex gap-2 bg-admin-bg-surface/60 p-1 border border-white/5 rounded">
           {(["bookings", "services", "config"] as const).map((tab) => (
             <button
               key={tab}
@@ -250,7 +250,7 @@ export default function AdminMentorshipPage() {
 
       {/* Bookings View */}
       {activeTab === "bookings" && (
-        <div className="border border-white/5 bg-[#0E0E13]/20 rounded-xl overflow-hidden">
+        <div className="border border-white/5 bg-admin-bg-surface/20 rounded-xl overflow-hidden">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="border-b border-white/5 bg-white/5 text-gray-400 uppercase">
@@ -273,7 +273,7 @@ export default function AdminMentorshipPage() {
                 bookings?.map((book) => (
                   <tr key={book._id} className="hover:bg-white/5 transition-colors">
                     <td className="p-3">
-                      <strong className="text-[#F7F5F0] block">{book.name}</strong>
+                      <strong className="text-admin-text block">{book.name}</strong>
                       <span className="text-[10px] text-gray-500">{book.email}</span>
                     </td>
                     <td className="p-3 text-cyan-400 uppercase">{book.service}</td>
@@ -304,7 +304,7 @@ export default function AdminMentorshipPage() {
                             onClick={() =>
                               updateBookingStatusMutation.mutate({ id: book._id, status: "confirmed" })
                             }
-                            className="p-1 bg-[#07070A] hover:bg-emerald-500/25 text-gray-400 hover:text-emerald-400 border border-white/10 rounded cursor-pointer transition-colors"
+                            className="p-1 bg-admin-bg-base hover:bg-emerald-500/25 text-gray-400 hover:text-emerald-400 border border-white/10 rounded cursor-pointer transition-colors"
                           >
                             <Check size={12} />
                           </button>
@@ -312,7 +312,7 @@ export default function AdminMentorshipPage() {
                             onClick={() =>
                               updateBookingStatusMutation.mutate({ id: book._id, status: "declined" })
                             }
-                            className="p-1 bg-[#07070A] hover:bg-red-500/25 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
+                            className="p-1 bg-admin-bg-base hover:bg-red-500/25 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
                           >
                             <X size={12} />
                           </button>
@@ -331,7 +331,7 @@ export default function AdminMentorshipPage() {
       {activeTab === "services" && (
         <div className="space-y-6">
           {isServiceFormOpen ? (
-            <div className="bg-[#0E0E13]/30 border border-white/5 rounded-xl p-6 space-y-4">
+            <div className="bg-admin-bg-surface/30 border border-white/5 rounded-xl p-6 space-y-4">
               <div className="flex justify-between items-center border-b border-white/5 pb-3">
                 <h2 className="text-xs font-bold text-cyan-400 uppercase tracking-widest">
                   {editingServiceId ? "Edit Mentorship Service" : "Add Mentorship Service"}
@@ -353,7 +353,7 @@ export default function AdminMentorshipPage() {
                       required
                       value={serviceTitle}
                       onChange={(e) => setServiceTitle(e.target.value)}
-                      className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                      className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                     />
                   </div>
                   <div className="space-y-1">
@@ -363,7 +363,7 @@ export default function AdminMentorshipPage() {
                       required
                       value={serviceDuration}
                       onChange={(e) => setServiceDuration(e.target.value)}
-                      className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                      className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -377,7 +377,7 @@ export default function AdminMentorshipPage() {
                       min={0}
                       value={servicePrice}
                       onChange={(e) => setServicePrice(Number(e.target.value))}
-                      className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                      className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -389,7 +389,7 @@ export default function AdminMentorshipPage() {
                     rows={3}
                     value={serviceDescription}
                     onChange={(e) => setServiceDescription(e.target.value)}
-                    className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                    className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                   />
                 </div>
 
@@ -412,7 +412,7 @@ export default function AdminMentorshipPage() {
                 </button>
               </div>
 
-              <div className="border border-white/5 bg-[#0E0E13]/20 rounded-xl overflow-hidden">
+              <div className="border border-white/5 bg-admin-bg-surface/20 rounded-xl overflow-hidden">
                 <table className="w-full text-left border-collapse text-xs">
                   <thead>
                     <tr className="border-b border-white/5 bg-white/5 text-gray-400 uppercase">
@@ -425,14 +425,14 @@ export default function AdminMentorshipPage() {
                   <tbody className="divide-y divide-white/5">
                     {details?.services.map((svc) => (
                       <tr key={svc._id} className="hover:bg-white/5 transition-colors">
-                        <td className="p-3 font-bold text-[#F7F5F0]">{svc.title}</td>
+                        <td className="p-3 font-bold text-admin-text">{svc.title}</td>
                         <td className="p-3 text-cyan-400 font-bold">${svc.price}</td>
                         <td className="p-3 text-gray-400">{svc.duration}</td>
                         <td className="p-3 text-right">
                           <div className="flex justify-end gap-2">
                             <button
                               onClick={() => initEditService(svc)}
-                              className="p-1.5 bg-[#07070A] hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 border border-white/10 rounded cursor-pointer transition-colors"
+                              className="p-1.5 bg-admin-bg-base hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 border border-white/10 rounded cursor-pointer transition-colors"
                             >
                               <Edit2 size={12} />
                             </button>
@@ -442,7 +442,7 @@ export default function AdminMentorshipPage() {
                                   deleteServiceMutation.mutate(svc._id);
                                 }
                               }}
-                              className="p-1.5 bg-[#07070A] hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
+                              className="p-1.5 bg-admin-bg-base hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
                             >
                               <Trash2 size={12} />
                             </button>
@@ -460,7 +460,7 @@ export default function AdminMentorshipPage() {
 
       {/* Config Editor View */}
       {activeTab === "config" && (
-        <form onSubmit={handleConfigSubmit} className="space-y-8 bg-[#0E0E13]/30 border border-white/5 rounded-xl p-6">
+        <form onSubmit={handleConfigSubmit} className="space-y-8 bg-admin-bg-surface/30 border border-white/5 rounded-xl p-6">
           
           {/* Testimonials */}
           <div className="space-y-4">
@@ -477,7 +477,7 @@ export default function AdminMentorshipPage() {
             
             <div className="space-y-4">
               {configTestimonials.map((t, idx) => (
-                <div key={idx} className="border border-white/5 bg-[#07070A]/50 p-4 rounded-lg space-y-3 relative">
+                <div key={idx} className="border border-white/5 bg-admin-bg-base/50 p-4 rounded-lg space-y-3 relative">
                   <button
                     type="button"
                     onClick={() => removeTestimonialRow(idx)}
@@ -498,7 +498,7 @@ export default function AdminMentorshipPage() {
                           updated[idx].name = e.target.value;
                           setConfigTestimonials(updated);
                         }}
-                        className="w-full bg-[#07070A] border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
+                        className="w-full bg-admin-bg-base border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
                       />
                     </div>
                     <div className="space-y-1">
@@ -512,7 +512,7 @@ export default function AdminMentorshipPage() {
                           updated[idx].role = e.target.value;
                           setConfigTestimonials(updated);
                         }}
-                        className="w-full bg-[#07070A] border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
+                        className="w-full bg-admin-bg-base border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
                       />
                     </div>
                     <div className="space-y-1">
@@ -525,7 +525,7 @@ export default function AdminMentorshipPage() {
                           updated[idx].avatarUrl = e.target.value;
                           setConfigTestimonials(updated);
                         }}
-                        className="w-full bg-[#07070A] border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
+                        className="w-full bg-admin-bg-base border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
                       />
                     </div>
                   </div>
@@ -540,7 +540,7 @@ export default function AdminMentorshipPage() {
                         updated[idx].text = e.target.value;
                         setConfigTestimonials(updated);
                       }}
-                      className="w-full bg-[#07070A] border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
+                      className="w-full bg-admin-bg-base border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -563,7 +563,7 @@ export default function AdminMentorshipPage() {
 
             <div className="space-y-4">
               {configFaqs.map((faq, idx) => (
-                <div key={idx} className="border border-white/5 bg-[#07070A]/50 p-4 rounded-lg space-y-3 relative">
+                <div key={idx} className="border border-white/5 bg-admin-bg-base/50 p-4 rounded-lg space-y-3 relative">
                   <button
                     type="button"
                     onClick={() => removeFaqRow(idx)}
@@ -583,7 +583,7 @@ export default function AdminMentorshipPage() {
                         updated[idx].question = e.target.value;
                         setConfigFaqs(updated);
                       }}
-                      className="w-full bg-[#07070A] border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
+                      className="w-full bg-admin-bg-base border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
                     />
                   </div>
                   <div className="space-y-1 text-xs">
@@ -597,7 +597,7 @@ export default function AdminMentorshipPage() {
                         updated[idx].answer = e.target.value;
                         setConfigFaqs(updated);
                       }}
-                      className="w-full bg-[#07070A] border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
+                      className="w-full bg-admin-bg-base border border-white/10 rounded px-2.5 py-1.5 text-gray-300 focus:border-cyan-400 focus:outline-none"
                     />
                   </div>
                 </div>
@@ -617,3 +617,4 @@ export default function AdminMentorshipPage() {
     </div>
   );
 }
+

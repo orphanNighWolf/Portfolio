@@ -150,7 +150,7 @@ export default function AdminSkillsPage() {
 
       <div className="grid lg:grid-cols-3 gap-8">
         {/* Left Side: Form Editor */}
-        <div className="bg-[#0E0E13]/30 border border-white/5 rounded-xl p-6 h-fit space-y-4">
+        <div className="bg-admin-bg-surface/30 border border-white/5 rounded-xl p-6 h-fit space-y-4">
           <h2 className="text-xs font-bold text-cyan-400 uppercase tracking-widest flex items-center gap-1.5">
             {editingId ? <Edit2 size={12} /> : <Plus size={12} />}
             {editingId ? "Edit Skill" : "Create Skill"}
@@ -164,7 +164,7 @@ export default function AdminSkillsPage() {
                 required
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
               />
             </div>
 
@@ -173,7 +173,7 @@ export default function AdminSkillsPage() {
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
               >
                 {CATEGORIES.map((cat) => (
                   <option key={cat} value={cat}>
@@ -193,7 +193,7 @@ export default function AdminSkillsPage() {
                   required
                   value={level}
                   onChange={(e) => setLevel(Number(e.target.value))}
-                  className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                 />
               </div>
               <div className="space-y-1">
@@ -204,7 +204,7 @@ export default function AdminSkillsPage() {
                   required
                   value={yearsExperience}
                   onChange={(e) => setYearsExperience(Number(e.target.value))}
-                  className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                 />
               </div>
             </div>
@@ -215,7 +215,7 @@ export default function AdminSkillsPage() {
                 type="text"
                 value={icon}
                 onChange={(e) => setIcon(e.target.value)}
-                className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                 placeholder="e.g. Code, Terminal, Server"
               />
             </div>
@@ -226,7 +226,7 @@ export default function AdminSkillsPage() {
                 rows={2}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
-                className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
               />
             </div>
 
@@ -236,7 +236,7 @@ export default function AdminSkillsPage() {
                 id="featured"
                 checked={featured}
                 onChange={(e) => setFeatured(e.target.checked)}
-                className="rounded border-white/10 bg-[#07070A] text-cyan-500 focus:ring-0 cursor-pointer"
+                className="rounded border-white/10 bg-admin-bg-base text-cyan-500 focus:ring-0 cursor-pointer"
               />
               <label htmlFor="featured" className="text-gray-400 uppercase cursor-pointer select-none">
                 Featured Skill (Promo on Home)
@@ -266,7 +266,7 @@ export default function AdminSkillsPage() {
 
         {/* Right Side: List Grid */}
         <div className="lg:col-span-2 space-y-4">
-          <div className="border border-white/5 bg-[#0E0E13]/20 rounded-xl overflow-hidden">
+          <div className="border border-white/5 bg-admin-bg-surface/20 rounded-xl overflow-hidden">
             <table className="w-full text-left border-collapse text-xs">
               <thead>
                 <tr className="border-b border-white/5 bg-white/5 text-gray-400 uppercase">
@@ -280,7 +280,7 @@ export default function AdminSkillsPage() {
               <tbody className="divide-y divide-white/5">
                 {skills?.map((skill) => (
                   <tr key={skill._id} className="hover:bg-white/5 transition-colors">
-                    <td className="p-3 font-bold text-[#F7F5F0]">
+                    <td className="p-3 font-bold text-admin-text">
                       {skill.name}
                       {skill.featured && (
                         <span className="ml-1.5 text-[8px] bg-yellow-950/40 text-yellow-400 border border-yellow-500/25 px-1.5 py-0.5 rounded">
@@ -295,7 +295,7 @@ export default function AdminSkillsPage() {
                       <div className="flex justify-end gap-2">
                         <button
                           onClick={() => handleEditInit(skill)}
-                          className="p-1.5 bg-[#07070A] hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 border border-white/10 rounded cursor-pointer transition-colors"
+                          className="p-1.5 bg-admin-bg-base hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 border border-white/10 rounded cursor-pointer transition-colors"
                           title="Edit"
                         >
                           <Edit2 size={12} />
@@ -306,7 +306,7 @@ export default function AdminSkillsPage() {
                               deleteMutation.mutate(skill._id);
                             }
                           }}
-                          className="p-1.5 bg-[#07070A] hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
+                          className="p-1.5 bg-admin-bg-base hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
                           title="Delete"
                         >
                           <Trash2 size={12} />
@@ -323,3 +323,4 @@ export default function AdminSkillsPage() {
     </div>
   );
 }
+

@@ -23,6 +23,12 @@
   --color-accent-ai-tint: var(--accent-ai-tint);
   --color-accent-analytics-tint: var(--accent-analytics-tint);
   --color-accent-finance-tint: var(--accent-finance-tint);
+
+  /* Admin console colors */
+  --color-admin-bg-surface: var(--admin-bg-surface);
+  --color-admin-bg-base: var(--admin-bg-base);
+  --color-admin-bg-aside: var(--admin-bg-aside);
+  --color-admin-text: var(--admin-text);
   
   /* Semantic state indicators */
   --color-success: var(--success);
@@ -67,6 +73,12 @@
   --accent-ai-tint: #EFF6FF;
   --accent-analytics-tint: #F0FDF4;
   --accent-finance-tint: #FFFBEB;
+
+  /* Admin console colors */
+  --admin-bg-surface: #0E0E13;
+  --admin-bg-base: #07070A;
+  --admin-bg-aside: #0A0A0F;
+  --admin-text: #F7F5F0;
   
   /* System states */
   --success: #16A34A;

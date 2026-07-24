@@ -135,7 +135,7 @@ export default function AdminSocialsPage() {
           </button>
         </div>
 
-        <div className="bg-[#07070A] border border-white/10 rounded-xl overflow-hidden shadow-inner">
+        <div className="bg-admin-bg-base border border-white/10 rounded-xl overflow-hidden shadow-inner">
           <textarea
             rows={16}
             value={jsonText}
@@ -156,3 +156,4 @@ export default function AdminSocialsPage() {
     </div>
   );
 }
+

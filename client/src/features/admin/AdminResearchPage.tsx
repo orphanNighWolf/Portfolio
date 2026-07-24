@@ -160,7 +160,7 @@ export default function AdminResearchPage() {
       )}
 
       {isFormOpen ? (
-        <div className="bg-[#0E0E13]/30 border border-white/5 rounded-xl p-6 space-y-6">
+        <div className="bg-admin-bg-surface/30 border border-white/5 rounded-xl p-6 space-y-6">
           <div className="flex justify-between items-center border-b border-white/5 pb-3">
             <h2 className="text-xs font-bold text-cyan-400 uppercase tracking-widest">
               {editingId ? "Edit Research Details" : "Create Research Paper"}
@@ -182,7 +182,7 @@ export default function AdminResearchPage() {
                   required
                   value={title}
                   onChange={(e) => setTitle(e.target.value)}
-                  className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                 />
               </div>
               <div className="space-y-1">
@@ -192,7 +192,7 @@ export default function AdminResearchPage() {
                   required
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                 />
               </div>
             </div>
@@ -204,7 +204,7 @@ export default function AdminResearchPage() {
                   type="text"
                   value={tagsStr}
                   onChange={(e) => setTagsStr(e.target.value)}
-                  className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                   placeholder="LLM, Attention"
                 />
               </div>
@@ -216,7 +216,7 @@ export default function AdminResearchPage() {
                   min={0}
                   value={readingTime}
                   onChange={(e) => setReadingTime(Number(e.target.value))}
-                  className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
                 />
               </div>
             </div>
@@ -233,7 +233,7 @@ export default function AdminResearchPage() {
                   id="bookmarked-paper"
                   checked={bookmarked}
                   onChange={(e) => setBookmarked(e.target.checked)}
-                  className="rounded border-white/10 bg-[#07070A] text-cyan-500 focus:ring-0 cursor-pointer"
+                  className="rounded border-white/10 bg-admin-bg-base text-cyan-500 focus:ring-0 cursor-pointer"
                 />
                 <label htmlFor="bookmarked-paper" className="text-gray-400 uppercase cursor-pointer select-none">
                   Bookmarked
@@ -245,7 +245,7 @@ export default function AdminResearchPage() {
                 <select
                   value={status}
                   onChange={(e) => setStatus(e.target.value as "draft" | "published")}
-                  className="bg-[#07070A] border border-white/10 rounded px-3 py-1.5 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+                  className="bg-admin-bg-base border border-white/10 rounded px-3 py-1.5 text-admin-text focus:border-cyan-400 focus:outline-none"
                 >
                   <option value="draft">Draft</option>
                   <option value="published">Published</option>
@@ -263,7 +263,7 @@ export default function AdminResearchPage() {
           </form>
         </div>
       ) : (
-        <div className="border border-white/5 bg-[#0E0E13]/20 rounded-xl overflow-hidden">
+        <div className="border border-white/5 bg-admin-bg-surface/20 rounded-xl overflow-hidden">
           <table className="w-full text-left border-collapse text-xs">
             <thead>
               <tr className="border-b border-white/5 bg-white/5 text-gray-400 uppercase">
@@ -276,7 +276,7 @@ export default function AdminResearchPage() {
             <tbody className="divide-y divide-white/5">
               {researchItems?.map((doc) => (
                 <tr key={doc._id} className="hover:bg-white/5 transition-colors">
-                  <td className="p-3 font-bold text-[#F7F5F0]">{doc.title}</td>
+                  <td className="p-3 font-bold text-admin-text">{doc.title}</td>
                   <td className="p-3 text-cyan-400 uppercase">{doc.category}</td>
                   <td className="p-3">
                     <span
@@ -293,7 +293,7 @@ export default function AdminResearchPage() {
                     <div className="flex justify-end gap-2">
                       <button
                         onClick={() => handleEditInit(doc)}
-                        className="p-1.5 bg-[#07070A] hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 border border-white/10 rounded cursor-pointer transition-colors"
+                        className="p-1.5 bg-admin-bg-base hover:bg-cyan-500/20 text-gray-400 hover:text-cyan-400 border border-white/10 rounded cursor-pointer transition-colors"
                       >
                         <Edit2 size={12} />
                       </button>
@@ -303,7 +303,7 @@ export default function AdminResearchPage() {
                             deleteMutation.mutate(doc._id);
                           }
                         }}
-                        className="p-1.5 bg-[#07070A] hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
+                        className="p-1.5 bg-admin-bg-base hover:bg-red-500/20 text-gray-400 hover:text-red-400 border border-white/10 rounded cursor-pointer transition-colors"
                       >
                         <Trash2 size={12} />
                       </button>
@@ -318,3 +318,4 @@ export default function AdminResearchPage() {
     </div>
   );
 }
+

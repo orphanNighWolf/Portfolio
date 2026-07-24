@@ -119,7 +119,7 @@ export default function AdminAboutPage() {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-6 bg-[#0E0E13]/30 border border-white/5 rounded-xl p-6">
+      <form onSubmit={handleSubmit} className="space-y-6 bg-admin-bg-surface/30 border border-white/5 rounded-xl p-6">
         <div className="grid md:grid-cols-2 gap-4">
           <div className="space-y-1">
             <label className="text-xs text-gray-400 uppercase">Name</label>
@@ -128,7 +128,7 @@ export default function AdminAboutPage() {
               required
               value={name}
               onChange={(e) => setName(e.target.value)}
-              className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+              className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
             />
           </div>
           <div className="space-y-1">
@@ -138,7 +138,7 @@ export default function AdminAboutPage() {
               required
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+              className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
             />
           </div>
         </div>
@@ -150,7 +150,7 @@ export default function AdminAboutPage() {
             rows={3}
             value={bio}
             onChange={(e) => setBio(e.target.value)}
-            className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+            className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
           />
         </div>
 
@@ -162,7 +162,7 @@ export default function AdminAboutPage() {
               required
               value={location}
               onChange={(e) => setLocation(e.target.value)}
-              className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+              className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
             />
           </div>
           <div className="space-y-1">
@@ -171,7 +171,7 @@ export default function AdminAboutPage() {
               type="text"
               value={avatarUrl}
               onChange={(e) => setAvatarUrl(e.target.value)}
-              className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+              className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
             />
           </div>
         </div>
@@ -183,7 +183,7 @@ export default function AdminAboutPage() {
             rows={2}
             value={currentFocus}
             onChange={(e) => setCurrentFocus(e.target.value)}
-            className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+            className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
           />
         </div>
 
@@ -194,7 +194,7 @@ export default function AdminAboutPage() {
               rows={2}
               value={techStackStr}
               onChange={(e) => setTechStackStr(e.target.value)}
-              className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+              className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
               placeholder="React, TypeScript, PyTorch"
             />
           </div>
@@ -204,7 +204,7 @@ export default function AdminAboutPage() {
               rows={2}
               value={interestsStr}
               onChange={(e) => setInterestsStr(e.target.value)}
-              className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+              className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
               placeholder="Bouldering, Quantum physics"
             />
           </div>
@@ -217,7 +217,7 @@ export default function AdminAboutPage() {
             rows={2}
             value={mentorshipCta}
             onChange={(e) => setMentorshipCta(e.target.value)}
-            className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+            className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
           />
         </div>
 
@@ -228,7 +228,7 @@ export default function AdminAboutPage() {
             rows={2}
             value={contactCta}
             onChange={(e) => setContactCta(e.target.value)}
-            className="w-full bg-[#07070A] border border-white/10 rounded px-3 py-2 text-[#F7F5F0] focus:border-cyan-400 focus:outline-none"
+            className="w-full bg-admin-bg-base border border-white/10 rounded px-3 py-2 text-admin-text focus:border-cyan-400 focus:outline-none"
           />
         </div>
 
@@ -244,7 +244,7 @@ export default function AdminAboutPage() {
               rows={5}
               value={educationJson}
               onChange={(e) => setEducationJson(e.target.value)}
-              className="w-full bg-[#07070A] border border-white/10 rounded p-3 text-cyan-400 text-xs font-mono focus:border-cyan-400 focus:outline-none"
+              className="w-full bg-admin-bg-base border border-white/10 rounded p-3 text-cyan-400 text-xs font-mono focus:border-cyan-400 focus:outline-none"
             />
           </div>
 
@@ -257,7 +257,7 @@ export default function AdminAboutPage() {
               rows={5}
               value={experienceJson}
               onChange={(e) => setExperienceJson(e.target.value)}
-              className="w-full bg-[#07070A] border border-white/10 rounded p-3 text-cyan-400 text-xs font-mono focus:border-cyan-400 focus:outline-none"
+              className="w-full bg-admin-bg-base border border-white/10 rounded p-3 text-cyan-400 text-xs font-mono focus:border-cyan-400 focus:outline-none"
             />
           </div>
 
@@ -270,7 +270,7 @@ export default function AdminAboutPage() {
               rows={5}
               value={timelineJson}
               onChange={(e) => setTimelineJson(e.target.value)}
-              className="w-full bg-[#07070A] border border-white/10 rounded p-3 text-cyan-400 text-xs font-mono focus:border-cyan-400 focus:outline-none"
+              className="w-full bg-admin-bg-base border border-white/10 rounded p-3 text-cyan-400 text-xs font-mono focus:border-cyan-400 focus:outline-none"
             />
           </div>
         </div>
@@ -286,3 +286,4 @@ export default function AdminAboutPage() {
     </div>
   );
 }
+
