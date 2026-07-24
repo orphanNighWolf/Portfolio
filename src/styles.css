@@ -10,17 +10,17 @@
   --font-mono-alt: "IBM Plex Mono", monospace;
 
   /* Theme color custom tokens */
-  --color-bg-base: #FAF9F6;          /* warm light paper tone base */
-  --color-bg-surface: #FFFFFF;       /* white */
-  --color-bg-elevated: #F6F4EE;      /* warm off-white/paper texture elevated */
-  --color-border: #E8E5DC;           /* soft grey border */
+  --color-bg-base: #EFE6DD;          /* cream base */
+  --color-bg-surface: #FAF6F1;       /* surface cream/white */
+  --color-bg-elevated: #FAF6F1;      /* surface cream/white */
+  --color-border: #DFD5C8;           /* soft warm border */
   
-  --color-text-primary: #171717;     /* ink tone */
-  --color-text-secondary: #4A4A4A;   /* ink/70 secondary */
-  --color-text-muted: #7E7E7E;       /* muted ink/50 */
+  --color-text-primary: #2D2A26;     /* ink tone */
+  --color-text-secondary: #4A4742;   /* secondary ink tone */
+  --color-text-muted: #7A756D;       /* muted ink/50 */
   
   /* Domain Accents */
-  --color-accent-terracotta: #C2593F; /* Terracotta brand color */
+  --color-accent-terracotta: #BB4430; /* Terracotta brand color */
   --color-accent-analyst: #059669;
   --color-accent-engineer: #2563EB;
   --color-accent-scientist: #7C3AED;
@@ -54,9 +54,19 @@ body {
 
 /* Paper Elevated styling */
 .paper-elevated {
-  background: rgba(250, 249, 246, 0.85);
+  background: rgba(250, 246, 241, 0.85);
   backdrop-filter: blur(16px);
-  border: 1px solid rgba(232, 229, 220, 0.6);
+  border: 1px solid rgba(223, 213, 200, 0.6);
+}
+
+/* Global Focus outline rules for interactive elements */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--color-accent-terracotta) !important;
+  outline-offset: 2px;
 }
 
 /* Stagger reveals via CSS */
