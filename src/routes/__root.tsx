@@ -1,8 +1,9 @@
-import { HeadContent, Scripts, createRootRoute } from '@tanstack/react-router'
+import { HeadContent, Scripts, createRootRoute, useLocation } from '@tanstack/react-router'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { MotionProvider } from '../lib/motion-context'
 import { SoftBackdrop } from '../components/portfolio/SoftBackdrop'
 import { Shell } from '../components/portfolio/Shell'
+import { PageTransition } from '../components/portfolio/PageTransition'
 import appCss from '../styles.css?url'
 
 const queryClient = new QueryClient()
@@ -31,6 +32,15 @@ export const Route = createRootRoute({
   shellComponent: RootDocument,
 })
 
+function ContentWrapper({ children }: { children: React.ReactNode }) {
+  const { pathname } = useLocation()
+  return (
+    <PageTransition key={pathname}>
+      {children}
+    </PageTransition>
+  )
+}
+
 function RootDocument({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
@@ -42,7 +52,9 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           <MotionProvider>
             <SoftBackdrop />
             <Shell>
-              {children}
+              <ContentWrapper>
+                {children}
+              </ContentWrapper>
             </Shell>
           </MotionProvider>
         </QueryClientProvider>

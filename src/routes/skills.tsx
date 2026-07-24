@@ -63,11 +63,11 @@ function SkillsPage() {
                 <span className="text-[10px] font-mono text-text-muted">{cat.description}</span>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 stagger-container">
                 {categorySkills.map((skill) => (
                   <div
                     key={skill.name}
-                    className="p-5 rounded-2xl border border-border/60 bg-bg-surface flex flex-col justify-between hover:shadow-sm transition-all duration-300"
+                    className="p-5 rounded-2xl border border-border/60 bg-bg-surface flex flex-col justify-between hover:shadow-sm transition-all duration-300 stagger-item"
                   >
                     <div className="flex items-center justify-between">
                       <span className="text-sm font-semibold text-text-primary">{skill.name}</span>

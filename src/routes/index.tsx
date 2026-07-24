@@ -61,7 +61,7 @@ function Home() {
             Explore Projects
           </Link>
           <Link
-            to="/experience"
+            to="/about"
             className="px-5 py-2.5 rounded-xl border border-border hover:bg-bg-elevated text-text-primary text-xs font-mono uppercase tracking-wider transition-colors"
           >
             View Experience
@@ -76,11 +76,11 @@ function Home() {
           <p className="text-text-muted text-xs font-mono">// PROGRESSION_ANALYSIS_METRICS</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 stagger-container">
           {tracks.map((track) => (
             <div
               key={track.id}
-              className={`p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 ${track.accentClass}`}
+              className={`p-6 rounded-2xl border transition-all duration-300 flex flex-col justify-between hover:-translate-y-1 stagger-item ${track.accentClass}`}
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">
@@ -119,7 +119,7 @@ function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-container">
           {projects.slice(0, 2).map((project) => {
             const isScientist = project.category === "Scientist";
             const isEngineer = project.category === "Engineer";
@@ -129,7 +129,7 @@ function Home() {
             return (
               <div
                 key={project.id}
-                className={`p-6 rounded-2xl border border-border/60 bg-bg-surface flex flex-col justify-between transition-all duration-300 hover:shadow-md ${accentBorder}`}
+                className={`p-6 rounded-2xl border border-border/60 bg-bg-surface flex flex-col justify-between transition-all duration-300 hover:shadow-md stagger-item ${accentBorder}`}
               >
                 <div className="space-y-4">
                   <div className="flex justify-between items-start">
@@ -162,9 +162,9 @@ function Home() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 stagger-container">
           {skills.slice(0, 8).map((skill) => (
-            <div key={skill.name} className="p-4 rounded-xl border border-border/40 bg-bg-surface flex flex-col justify-between">
+            <div key={skill.name} className="p-4 rounded-xl border border-border/40 bg-bg-surface flex flex-col justify-between stagger-item">
               <span className="text-xs font-medium text-text-primary">{skill.name}</span>
               <div className="flex gap-0.5 mt-2">
                 {[...Array(5)].map((_, i) => (
@@ -190,16 +190,16 @@ function Home() {
             <h2 className="text-xl font-bold text-text-primary tracking-tight">Latest Writings</h2>
             <span className="text-[10px] text-text-muted font-mono block">// KNOWLEDGE_SHARING_SOCKET</span>
           </div>
-          <Link to="/blogs" className="text-xs font-mono text-text-muted hover:text-accent-engineer flex items-center gap-1 transition-colors">
+          <Link to="/writing" className="text-xs font-mono text-text-muted hover:text-accent-engineer flex items-center gap-1 transition-colors">
             VIEW BLOGS <ArrowRight size={12} />
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-container">
           {blogs.map((blog) => (
             <div
               key={blog.id}
-              className="p-6 rounded-2xl border border-border/60 bg-bg-surface flex flex-col justify-between hover:border-border transition-all duration-300"
+              className="p-6 rounded-2xl border border-border/60 bg-bg-surface flex flex-col justify-between hover:border-border transition-all duration-300 stagger-item"
             >
               <div className="space-y-3">
                 <div className="flex justify-between text-[10px] font-mono text-text-muted">

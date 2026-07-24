@@ -22,7 +22,7 @@ export function Shell({ children }: ShellProps) {
   ];
 
   return (
-    <div className="min-h-screen flex flex-col font-sans">
+    <div className={`min-h-screen flex flex-col font-sans ${motionEnabled ? "" : "motion-disabled"}`}>
       {/* Floating Pill Nav fixed top center */}
       <header className="fixed top-6 left-0 right-0 z-50 px-4 max-w-4xl mx-auto">
         <div className="paper-elevated rounded-full h-14 px-6 flex items-center justify-between shadow-[0_12px_40px_rgba(23,23,23,0.04)] border border-border/80">

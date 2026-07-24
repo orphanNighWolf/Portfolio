@@ -55,7 +55,7 @@ function Projects() {
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 stagger-container">
         {filteredProjects.map((project) => {
           const isScientist = project.category === "Scientist";
           const isEngineer = project.category === "Engineer";
@@ -66,7 +66,7 @@ function Projects() {
           return (
             <div
               key={project.id}
-              className={`p-6 rounded-2xl border border-border/60 bg-bg-surface flex flex-col justify-between transition-all duration-300 hover:shadow-md ${accentBorder}`}
+              className={`p-6 rounded-2xl border border-border/60 bg-bg-surface flex flex-col justify-between transition-all duration-300 hover:shadow-md stagger-item ${accentBorder}`}
             >
               <div className="space-y-4">
                 <div className="flex justify-between items-center">

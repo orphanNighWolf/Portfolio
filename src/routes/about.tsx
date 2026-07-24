@@ -50,7 +50,7 @@ function AboutPage() {
           <span className="text-xs font-mono text-text-muted block">// VERIFYING_EXPERIENCE_HISTORY</span>
         </div>
 
-        <div className="relative border-l border-border pl-6 ml-4 space-y-8 py-2">
+        <div className="relative border-l border-border pl-6 ml-4 space-y-8 py-2 stagger-container">
           {experience.map((exp, idx) => {
             const isScientist = exp.track === "scientist";
             const isEngineer = exp.track === "engineer";
@@ -62,7 +62,7 @@ function AboutPage() {
             const trackLabel = isScientist ? "Scientist Track" : isEngineer ? "Engineer Track" : "Analyst Track";
 
             return (
-              <div key={idx} className="relative">
+              <div key={idx} className="relative stagger-item">
                 {/* Timeline marker */}
                 <div className={`absolute -left-[35px] top-1.5 w-4 h-4 rounded-full border-4 border-bg-base ${accentColor.split(" ")[0]}`} />
 

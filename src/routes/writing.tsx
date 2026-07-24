@@ -21,7 +21,7 @@ function WritingPage() {
       </section>
 
       {/* Blogs list */}
-      <div className="space-y-6">
+      <div className="space-y-6 stagger-container">
         {blogs.map((blog) => (
           <div
             key={blog.id}
