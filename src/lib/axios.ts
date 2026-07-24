@@ -155,13 +155,13 @@ export const api = {
     console.log("[Mock API POST]:", url, payload, config);
 
     if (url === "/auth/login") {
-      if (payload?.email === "admin@portfolio.dev" && payload?.password === "admin123") {
+      if (payload?.email === "admin@portfolio.dev" && payload?.password === "@Aniket1") {
         return {
           data: {
             accessToken: "mock-jwt-auth-access-token",
             user: {
               id: "admin-uuid",
-              email: "admin@portfolio.dev",
+              email: "aniketsaini0596@gmail.com",
               role: "admin"
             }
           }
