@@ -1,10 +1,11 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { api } from "@/lib/axios";
 import { Search } from "lucide-react";
 import LoadingState from "@/components/LoadingState";
 import ErrorState from "@/components/ErrorState";
 import EmptyState from "@/components/EmptyState";
+import { getSkillIcon, getCategoryTheme } from "@/lib/skillIcons";
 
 interface Skill {
   _id: string;
@@ -17,79 +18,12 @@ interface Skill {
   featured?: boolean;
 }
 
-import { getSkillIcon, getCategoryTheme } from "@/lib/skillIcons";
-
 function GlassSkillTile({ skill }: { skill: Skill }) {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const [transform, setTransform] = useState("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
-  const [transition, setTransition] = useState("none");
-  const [hovered, setHovered] = useState(false);
-  const [isReducedMotion, setIsReducedMotion] = useState(false);
-
-  useEffect(() => {
-    if (typeof window === "undefined" || !window.matchMedia) return;
-    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setIsReducedMotion(mediaQuery.matches);
-    const handler = (e: MediaQueryListEvent) => setIsReducedMotion(e.matches);
-    mediaQuery.addEventListener("change", handler);
-    return () => mediaQuery.removeEventListener("change", handler);
-  }, []);
-
-  const isTouchDevice = () => {
-    return typeof window !== "undefined" && ("ontouchstart" in window || navigator.maxTouchPoints > 0);
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (isReducedMotion || isTouchDevice()) return;
-    const card = cardRef.current;
-    if (!card) return;
-
-    const rect = card.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-
-    const centerX = rect.width / 2;
-    const centerY = rect.height / 2;
-
-    const maxRotate = 6;
-    const rotateX = -((y - centerY) / centerY) * maxRotate;
-    const rotateY = ((x - centerX) / centerX) * maxRotate;
-
-    const scale = 1.03;
-
-    setTransition("transform 0.1s cubic-bezier(0.25, 0.46, 0.45, 0.94)");
-    setTransform(`perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(${scale}, ${scale}, ${scale})`);
-  };
-
-  const handleMouseEnter = () => {
-    setHovered(true);
-  };
-
-  const handleMouseLeave = () => {
-    setHovered(false);
-    if (isReducedMotion || isTouchDevice()) return;
-
-    setTransition("transform 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275)");
-    setTransform("perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)");
-  };
-
   const theme = getCategoryTheme(skill.category);
 
   return (
     <div
-      ref={cardRef}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-      style={{
-        transform: isReducedMotion ? "none" : (isTouchDevice() && hovered ? "scale3d(1.02, 1.02, 1.02)" : hovered ? `${transform} translateY(-2px)` : transform),
-        transition: isReducedMotion ? "none" : (isTouchDevice() ? "transform 0.2s ease" : transition),
-        borderColor: hovered ? theme.accent : "rgba(255, 255, 255, 0.08)",
-        boxShadow: hovered 
-          ? `0 12px 36px rgba(0, 0, 0, 0.4), 0 0 20px ${theme.shadowGlow}` 
-          : "0 8px 30px rgba(0, 0, 0, 0.2)",
-      }}
-      className="relative bg-bg-surface/50 backdrop-blur-[14px] border flex flex-col justify-between overflow-hidden group select-none transition-all duration-[200ms] text-text-primary h-[140px] w-full rounded-[20px] p-5"
+      className="relative bg-bg-surface border border-border flex flex-col justify-between overflow-hidden group select-none text-text-primary h-[140px] w-full rounded-[20px] p-5 transition-colors duration-150 hover:border-accent-ai"
     >
       <div className="absolute inset-0 bg-gradient-to-tr from-white/[0.01] via-transparent to-white/[0.03] pointer-events-none" />
 
@@ -106,10 +40,10 @@ function GlassSkillTile({ skill }: { skill: Skill }) {
       {/* Center Icon */}
       <div className="flex-grow flex items-center justify-center">
         <div 
-          className="w-16 h-16 flex items-center justify-center rounded-2xl bg-bg-elevated shadow-sm border border-border/10 transition-transform duration-300"
+          className="w-16 h-16 flex items-center justify-center rounded-2xl bg-bg-elevated shadow-none border border-border/10 transition-colors duration-150"
           style={{ color: theme.accent }}
         >
-          <div className="scale-[1.3]">
+          <div className="scale-[1.1]">
             {getSkillIcon(skill.name, skill.category)}
           </div>
         </div>
@@ -142,7 +76,7 @@ export default function SkillsPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto space-y-8 page-transition font-mono text-sm">
+    <div className="max-w-6xl mx-auto space-y-8 font-mono text-sm">
       {/* Filter and Search Bar Container */}
       <div className="w-full flex flex-col items-stretch gap-2.5">
         {/* Search Input - Full Width */}
@@ -155,12 +89,12 @@ export default function SkillsPage() {
             onFocus={() => setIsSearchActive(true)}
             onKeyDown={handleKeyDown}
             placeholder="Search capabilities..."
-            className="w-full h-9 bg-bg-surface border border-border/20 rounded-xl pl-9 pr-14 text-xs text-text-primary focus:border-accent-ai focus:outline-none transition-colors"
+            className="w-full h-9 bg-bg-surface border border-border/20 rounded-xl pl-9 pr-14 text-xs text-text-primary focus:border-accent-ai focus:outline-none transition-colors duration-150"
           />
           {isSearchActive && (
             <button
               onClick={() => setIsSearchActive(false)}
-              className="absolute right-3.5 text-[8px] text-text-muted hover:text-text-primary uppercase tracking-widest font-bold cursor-pointer transition-colors"
+              className="absolute right-3.5 text-[8px] text-text-muted hover:text-text-primary uppercase tracking-widest font-bold cursor-pointer transition-colors duration-150"
             >
               Close
             </button>
@@ -178,7 +112,7 @@ export default function SkillsPage() {
                   setSearch(skill.name);
                   setIsSearchActive(false);
                 }}
-                className="h-6 flex items-center justify-center px-2.5 rounded-md text-[8px] uppercase tracking-wider cursor-pointer border border-border/20 bg-bg-surface/30 text-text-primary hover:border-accent-ai/50 transition-all"
+                className="h-6 flex items-center justify-center px-2.5 rounded-md text-[8px] uppercase tracking-wider cursor-pointer border border-border/20 bg-bg-surface/30 text-text-primary hover:border-accent-ai/50 transition-colors duration-150"
               >
                 {skill.name}
               </button>
@@ -196,9 +130,9 @@ export default function SkillsPage() {
         <EmptyState title="No Capabilities Located" message="No matching capabilities were resolved inside system listings." />
       ) : (
         <div className="bg-bg-surface/10 p-8 md:p-12 rounded-[32px] border border-border/20 shadow-sm">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 stagger-container">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             {data.map((skill) => (
-              <div key={skill._id} className="stagger-item">
+              <div key={skill._id}>
                 <GlassSkillTile skill={skill} />
               </div>
             ))}

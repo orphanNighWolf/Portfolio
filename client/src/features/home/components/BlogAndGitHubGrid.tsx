@@ -34,7 +34,7 @@ export default function BlogAndGitHubGrid({ latestBlog, githubActivity }: BlogAn
             <h2 className="text-h3 font-bold text-text-primary tracking-tight">Latest Analysis Notes</h2>
             <span className="text-label text-text-muted font-mono block">// READING_KNOWLEDGE_INDEX</span>
           </div>
-          <Link to="/blogs" className="text-label text-text-muted hover:text-accent-finance flex items-center gap-1.5 transition-colors">
+          <Link to="/blogs" className="text-label text-text-muted hover:text-accent-finance flex items-center gap-1.5 transition-colors duration-150">
             VIEW INDEX <ArrowRight size={12} />
           </Link>
         </div>
@@ -66,7 +66,7 @@ export default function BlogAndGitHubGrid({ latestBlog, githubActivity }: BlogAn
             <h2 className="text-h3 font-bold text-text-primary tracking-tight">Recent System Logs</h2>
             <span className="text-label text-text-muted font-mono block">// INTERCEPTING_GITHUB_SOCKETS</span>
           </div>
-          <Link to="/github" className="text-label text-text-muted hover:text-accent-analytics flex items-center gap-1.5 transition-colors">
+          <Link to="/github" className="text-label text-text-muted hover:text-accent-analytics flex items-center gap-1.5 transition-colors duration-150">
             SYNC METRICS <ArrowRight size={12} />
           </Link>
         </div>

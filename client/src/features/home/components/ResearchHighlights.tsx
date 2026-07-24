@@ -24,7 +24,7 @@ export default function ResearchHighlights({ research }: ResearchHighlightsProps
           <h2 className="text-h3 font-bold text-text-primary tracking-tight">Research & Publications</h2>
           <span className="text-label text-text-muted font-mono block">// QUERYING_ACADEMIC_COLLECTION</span>
         </div>
-        <Link to="/research" className="text-label text-text-muted hover:text-accent-ai flex items-center gap-1.5 transition-colors">
+        <Link to="/research" className="text-label text-text-muted hover:text-accent-ai flex items-center gap-1.5 transition-colors duration-150">
           OPEN INDEX <ArrowRight size={12} />
         </Link>
       </div>

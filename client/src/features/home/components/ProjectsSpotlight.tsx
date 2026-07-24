@@ -58,7 +58,7 @@ export default function ProjectsSpotlight({ projects }: ProjectsSpotlightProps) 
           <h2 className="text-h3 font-bold text-text-primary tracking-tight">Code & Engineering Showcases</h2>
           <span className="text-label text-text-muted font-mono block">// RETRIEVING_PROJECT_GALLERY</span>
         </div>
-        <Link to="/projects" className="text-label text-text-muted hover:text-accent-ai flex items-center gap-1.5 transition-colors">
+        <Link to="/projects" className="text-label text-text-muted hover:text-accent-ai flex items-center gap-1.5 transition-colors duration-150">
           OPEN SPIRAL <ArrowRight size={12} />
         </Link>
       </div>
@@ -81,10 +81,10 @@ export default function ProjectsSpotlight({ projects }: ProjectsSpotlightProps) 
                   <div
                     key={project._id}
                     onClick={() => setActiveProjectIndex(index)}
-                    className={`grid grid-cols-3 items-center py-3.5 px-3 rounded-lg cursor-pointer transition-all duration-200 border-l-[3px] select-none ${
+                    className={`grid grid-cols-3 items-center py-3.5 px-3 rounded-lg cursor-pointer transition-colors duration-150 border-l-[3px] select-none ${
                       isActive 
                         ? 'border-l-accent-ai bg-accent-ai-tint border-y border-r border-border shadow-none' 
-                        : 'border-l-transparent hover:bg-bg-elevated/60 hover:border-l-text-muted/30'
+                        : 'border-l-transparent hover:bg-bg-elevated/60'
                     }`}
                   >
                     <div className={`text-xs font-bold font-display ${isActive ? 'text-text-primary' : 'text-text-secondary'}`}>
@@ -104,7 +104,7 @@ export default function ProjectsSpotlight({ projects }: ProjectsSpotlightProps) 
 
           <div className="border-t border-border/20 pt-4 mt-4 px-3 flex justify-between items-center text-[10px] font-mono text-text-muted">
             <span>ACTIVE_RECORD // 0{activeProjectIndex + 1}_OF_0{Math.min(projects.length, 5)}</span>
-            <span className="animate-pulse">SELECT_TO_SPECIFY</span>
+            <span>SELECT_TO_SPECIFY</span>
           </div>
         </div>
 
@@ -138,10 +138,10 @@ export default function ProjectsSpotlight({ projects }: ProjectsSpotlightProps) 
               {activeProject.category.toLowerCase().includes("ai") || activeProject.category.toLowerCase().includes("machine") ? (
                 /* AI Neural Nodes */
                 <svg viewBox="0 0 200 100" className="w-full h-full text-accent-ai/40">
-                  <circle cx="40" cy="50" r="4" fill="var(--accent-ai)" className="animate-pulse" />
+                  <circle cx="40" cy="50" r="4" fill="var(--accent-ai)" />
                   <circle cx="100" cy="30" r="4" fill="var(--accent-ai)" className="opacity-70" />
                   <circle cx="100" cy="70" r="4" fill="var(--accent-ai)" className="opacity-70" />
-                  <circle cx="160" cy="50" r="4" fill="var(--accent-ai)" className="animate-pulse" />
+                  <circle cx="160" cy="50" r="4" fill="var(--accent-ai)" />
                   <line x1="40" y1="50" x2="100" y2="30" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
                   <line x1="40" y1="50" x2="100" y2="70" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
                   <line x1="100" y1="30" x2="160" y2="50" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
@@ -150,18 +150,18 @@ export default function ProjectsSpotlight({ projects }: ProjectsSpotlightProps) 
               ) : activeProject.category.toLowerCase().includes("data") || activeProject.category.toLowerCase().includes("analytics") ? (
                 /* Data Bar Chart, matching user's image! */
                 <svg viewBox="0 0 200 100" className="w-full h-full text-accent-analytics/40">
-                  <rect x="20" y="60" width="12" height="30" fill="var(--accent-analytics)" className="opacity-40 animate-pulse" rx="1" style={{ animationDelay: '0.1s' }} />
-                  <rect x="50" y="40" width="12" height="50" fill="var(--accent-analytics)" className="opacity-60 animate-pulse" rx="1" style={{ animationDelay: '0.3s' }} />
-                  <rect x="80" y="70" width="12" height="20" fill="var(--accent-analytics)" className="opacity-40 animate-pulse" rx="1" style={{ animationDelay: '0.5s' }} />
-                  <rect x="110" y="30" width="12" height="60" fill="var(--accent-analytics)" className="opacity-80 animate-pulse" rx="1" style={{ animationDelay: '0.2s' }} />
-                  <rect x="140" y="50" width="12" height="40" fill="var(--accent-analytics)" className="opacity-60 animate-pulse" rx="1" style={{ animationDelay: '0.4s' }} />
-                  <rect x="170" y="20" width="12" height="70" fill="var(--accent-analytics)" className="animate-pulse" rx="1" style={{ animationDelay: '0.6s' }} />
+                  <rect x="20" y="60" width="12" height="30" fill="var(--accent-analytics)" className="opacity-40" rx="1" />
+                  <rect x="50" y="40" width="12" height="50" fill="var(--accent-analytics)" className="opacity-60" rx="1" />
+                  <rect x="80" y="70" width="12" height="20" fill="var(--accent-analytics)" className="opacity-40" rx="1" />
+                  <rect x="110" y="30" width="12" height="60" fill="var(--accent-analytics)" className="opacity-80" rx="1" />
+                  <rect x="140" y="50" width="12" height="40" fill="var(--accent-analytics)" className="opacity-60" rx="1" />
+                  <rect x="170" y="20" width="12" height="70" fill="var(--accent-analytics)" rx="1" />
                   <line x1="10" y1="90" x2="190" y2="90" stroke="currentColor" strokeWidth="1" />
                 </svg>
               ) : (
                 /* Finance Upward Spline */
                 <svg viewBox="0 0 200 100" className="w-full h-full text-accent-finance/40">
-                  <path d="M 20,80 Q 70,60 120,40 T 180,20" fill="none" stroke="var(--accent-finance)" strokeWidth="2" strokeLinecap="round" className="animate-pulse" />
+                  <path d="M 20,80 Q 70,60 120,40 T 180,20" fill="none" stroke="var(--accent-finance)" strokeWidth="2" strokeLinecap="round" />
                   <circle cx="180" cy="20" r="4" fill="var(--accent-ai)" />
                   <line x1="10" y1="90" x2="190" y2="90" stroke="currentColor" strokeWidth="1" />
                 </svg>
@@ -182,7 +182,7 @@ export default function ProjectsSpotlight({ projects }: ProjectsSpotlightProps) 
             
             <Link
               to={`/project/${activeProject.slug}`}
-              className="inline-flex items-center justify-center gap-1.5 bg-accent-ai hover:bg-accent-ai-hover hover:-translate-y-0.5 text-white text-[10px] font-mono font-medium uppercase tracking-wider px-4 py-2.5 rounded-lg shadow-none transition-all duration-150 ease-in-out select-none whitespace-nowrap self-end sm:self-auto"
+              className="inline-flex items-center justify-center gap-1.5 bg-accent-ai hover:bg-accent-ai-hover text-white text-[10px] font-mono font-medium uppercase tracking-wider px-4 py-2.5 rounded-lg shadow-none transition-colors duration-150 select-none whitespace-nowrap self-end sm:self-auto"
             >
               COMPILE SPEC &rarr;
             </Link>
