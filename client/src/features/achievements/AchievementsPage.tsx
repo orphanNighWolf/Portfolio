@@ -33,17 +33,17 @@ export default function AchievementsPage() {
 
   return (
     <div className="max-w-5xl mx-auto space-y-8 font-mono text-sm">
-      <div className="border-b border-white/5 pb-4">
-        <h1 className="text-xl font-bold text-[#F7F5F0]">// CREDENTIALS_&_AWARDS</h1>
-        <p className="text-xs text-gray-400 mt-1">Verified certifications, hackathon rankings, and departmental recognitions</p>
+      <div className="border-b border-border pb-4">
+        <h1 className="text-xl font-bold text-text-primary">// CREDENTIALS_&_AWARDS</h1>
+        <p className="text-xs text-text-secondary mt-1">Verified certifications, hackathon rankings, and departmental recognitions</p>
       </div>
 
       {isLoading ? (
-        <div className="text-center py-20 text-xs text-cyan-400">// ANALYZING_RECOGNITIONS...</div>
+        <div className="text-center py-20 text-xs text-accent-analytics">// ANALYZING_RECOGNITIONS...</div>
       ) : error ? (
-        <div className="text-center py-20 text-xs text-red-400">Error: Achievements loading failed.</div>
+        <div className="text-center py-20 text-xs text-error">Error: Achievements loading failed.</div>
       ) : !achievements || achievements.length === 0 ? (
-        <div className="text-center py-20 text-xs text-gray-500 border border-dashed border-white/5 rounded-xl">
+        <div className="text-center py-20 text-xs text-text-secondary border border-dashed border-border rounded-xl">
           No awards cataloged in current records.
         </div>
       ) : (
@@ -54,12 +54,12 @@ export default function AchievementsPage() {
             return (
               <div
                 key={item._id}
-                className="flex flex-col justify-between bg-[#0E0E13]/30 border border-white/5 rounded-xl overflow-hidden hover:border-cyan-400/25 transition-all group"
+                className="flex flex-col justify-between bg-bg-surface border border-border rounded-xl overflow-hidden hover:border-accent-analytics/25 transition-all group shadow-none"
               >
                 <div>
                   {/* Optional Image */}
                   {item.imageUrl && (
-                    <div className="h-40 w-full overflow-hidden bg-[#07070A] border-b border-white/5 relative">
+                    <div className="h-40 w-full overflow-hidden bg-bg-elevated border-b border-border relative">
                       <img
                         src={item.imageUrl}
                         alt={item.title}
@@ -69,9 +69,9 @@ export default function AchievementsPage() {
                   )}
 
                   <div className="p-5 space-y-3">
-                    <div className="flex justify-between items-center text-[9px] text-gray-500 uppercase">
+                    <div className="flex justify-between items-center text-[9px] text-text-secondary uppercase">
                       <span className="flex items-center gap-1">
-                        <Icon size={12} className="text-cyan-400" />
+                        <Icon size={12} className="text-accent-analytics" />
                         {item.type}
                       </span>
                       <span>
@@ -79,11 +79,11 @@ export default function AchievementsPage() {
                       </span>
                     </div>
 
-                    <h3 className="text-xs font-bold text-[#F7F5F0] group-hover:text-cyan-400 transition-colors leading-snug">
+                    <h3 className="text-xs font-bold text-text-primary group-hover:text-accent-analytics transition-colors leading-snug">
                       {item.title}
                     </h3>
-                    <p className="text-[10px] text-gray-400 font-bold">{item.organization}</p>
-                    <p className="text-[11px] text-gray-400 leading-relaxed pt-1">{item.description}</p>
+                    <p className="text-[10px] text-text-secondary font-bold">{item.organization}</p>
+                    <p className="text-[11px] text-text-secondary leading-relaxed pt-1">{item.description}</p>
                   </div>
                 </div>
 
@@ -93,7 +93,7 @@ export default function AchievementsPage() {
                       href={item.link}
                       target="_blank"
                       rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-[10px] text-cyan-400 hover:text-cyan-300 font-bold hover:underline uppercase"
+                      className="inline-flex items-center gap-1.5 text-[10px] text-accent-analytics hover:text-accent-analytics/80 font-bold hover:underline uppercase"
                     >
                       Verify Credentials <ExternalLink size={12} />
                     </a>

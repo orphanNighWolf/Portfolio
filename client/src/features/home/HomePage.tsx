@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { Sparkles, ArrowRight, MessageSquare, GraduationCap, Code2, Server, Database, GitBranch, Brain, Wrench, Compass } from "lucide-react";
 import LoadingState from "@/components/LoadingState";
 import EmptyState from "@/components/EmptyState";
+import Card from "@/components/Card";
 import {
   siReact,
   siVuedotjs,
@@ -241,8 +242,8 @@ function FloatingIconCarousel({ skills }: FloatingIconCarouselProps) {
               <div 
                 className={`w-16 h-16 flex items-center justify-center rounded-2xl bg-white shadow-none transition-all duration-300 ${
                   proximity > 0.75 
-                    ? "border-2 border-[#2563EB]" 
-                    : "border border-[#E2E8F0]"
+                    ? "border-2 border-accent-ai" 
+                    : "border border-border"
                 }`}
                 style={{ 
                   color: theme.accent,
@@ -349,13 +350,13 @@ export default function HomePage() {
           <div className="flex flex-wrap gap-4 pt-2">
             <Link
               to="/about"
-              className="bg-[#2563EB] hover:bg-[#1D4ED8] hover:-translate-y-0.5 text-white text-xs font-mono font-medium uppercase tracking-wider px-6 py-3 rounded-lg shadow-none transition-all duration-150 ease-in-out"
+              className="bg-accent-ai hover:bg-accent-ai-hover hover:-translate-y-0.5 text-white text-xs font-mono font-medium uppercase tracking-wider px-6 py-3 rounded-lg shadow-none transition-all duration-150 ease-in-out"
             >
               Analyze Profile
             </Link>
             <Link
               to="/contact"
-              className="border border-[#E2E8F0] bg-white hover:bg-[#F1F5F9] hover:-translate-y-0.5 text-[#0F172A] text-xs font-mono font-medium uppercase tracking-wider px-6 py-3 rounded-lg shadow-none transition-all duration-150 ease-in-out"
+              className="border border-border bg-bg-surface hover:bg-bg-elevated hover:-translate-y-0.5 text-text-primary text-xs font-mono font-medium uppercase tracking-wider px-6 py-3 rounded-lg shadow-none transition-all duration-150 ease-in-out"
             >
               Request Briefing
             </Link>
@@ -364,7 +365,7 @@ export default function HomePage() {
 
         {/* Right Side Signature Visual Element (AI, Data, Finance overlay) */}
         <div className="lg:col-span-5 relative flex items-center justify-center min-h-[300px] lg:min-h-[400px]">
-          <div className="absolute inset-0 bg-[#F1F5F9] border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-none flex items-center justify-center p-6 select-none">
+          <div className="absolute inset-0 bg-bg-elevated border border-border rounded-2xl overflow-hidden shadow-none flex items-center justify-center p-6 select-none">
             
             {/* Subtle Grid overlay */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.02)_1px,transparent_1px)] bg-[size:16px_16px] pointer-events-none" />
@@ -373,7 +374,7 @@ export default function HomePage() {
             <svg viewBox="0 0 400 400" className="w-full h-full max-w-[320px] relative z-10">
               
               {/* Coordinates Grid (Analytics domain) */}
-              <g className="text-[#64748B] opacity-30">
+              <g className="text-text-muted opacity-30">
                 <line x1="40" y1="360" x2="360" y2="360" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
                 <line x1="40" y1="40" x2="40" y2="360" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
                 <text x="350" y="380" className="text-[10px] font-mono fill-current">X_VAL</text>
@@ -381,7 +382,7 @@ export default function HomePage() {
               </g>
 
               {/* AI Neural Circle Paths */}
-              <g className="text-[#2563EB] opacity-60">
+              <g className="text-accent-ai opacity-60">
                 <circle cx="200" cy="200" r="110" fill="none" stroke="currentColor" strokeWidth="1.5" strokeDasharray="4 8" className="animate-spin" style={{ animationDuration: '30s' }} />
                 <circle cx="200" cy="200" r="80" fill="none" stroke="currentColor" strokeWidth="1" strokeDasharray="2 4" className="animate-spin" style={{ animationDuration: '15s', animationDirection: 'reverse' }} />
                 
@@ -394,7 +395,7 @@ export default function HomePage() {
               </g>
 
               {/* Data Bar Graphs (Analytics domain in Green) */}
-              <g className="text-[#16A34A] opacity-60">
+              <g className="text-accent-analytics opacity-60">
                 <rect x="70" y="270" width="16" height="90" fill="currentColor" rx="2" className="animate-pulse" style={{ animationDelay: '0.1s' }} />
                 <rect x="110" y="220" width="16" height="140" fill="currentColor" rx="2" className="animate-pulse" style={{ animationDelay: '0.3s' }} />
                 <rect x="150" y="290" width="16" height="70" fill="currentColor" rx="2" className="animate-pulse" style={{ animationDelay: '0.5s' }} />
@@ -404,7 +405,7 @@ export default function HomePage() {
               </g>
 
               {/* Upward Finance Spline (Advisory domain in Amber with Blue connector dots) */}
-              <g className="text-[#F59E0B]">
+              <g className="text-accent-finance">
                 <path 
                   d="M 40,320 Q 120,280 200,190 T 360,70" 
                   fill="none" 
@@ -413,9 +414,9 @@ export default function HomePage() {
                   strokeLinecap="round"
                 />
                 {/* Active Sweeping Node & Connectors in Blue */}
-                <circle cx="360" cy="70" r="5" fill="#2563EB" className="animate-pulse" />
-                <circle cx="200" cy="190" r="4" fill="#2563EB" />
-                <circle cx="120" cy="280" r="4" fill="#2563EB" />
+                <circle cx="360" cy="70" r="5" fill="var(--accent-ai)" className="animate-pulse" />
+                <circle cx="200" cy="190" r="4" fill="var(--accent-ai)" />
+                <circle cx="120" cy="280" r="4" fill="var(--accent-ai)" />
               </g>
               
             </svg>
@@ -455,7 +456,7 @@ export default function HomePage() {
         {data.projects && data.projects.length > 0 ? (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
             {/* Left Column: Project Sector Table List */}
-            <div className="lg:col-span-5 bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden shadow-none p-4 flex flex-col justify-between">
+            <div className="lg:col-span-5 bg-bg-surface border border-border rounded-2xl overflow-hidden shadow-none p-4 flex flex-col justify-between">
               <div>
                 <div className="grid grid-cols-3 text-[10px] font-mono text-text-muted uppercase border-b border-border pb-3 mb-2 px-3 tracking-wider font-bold">
                   <div>Project</div>
@@ -473,8 +474,8 @@ export default function HomePage() {
                         onClick={() => setActiveProjectIndex(index)}
                         className={`grid grid-cols-3 items-center py-3.5 px-3 rounded-lg cursor-pointer transition-all duration-200 border-l-[3px] select-none ${
                           isActive 
-                            ? 'border-l-[#2563EB] bg-[#EFF6FF] border-y border-r border-[#E2E8F0] shadow-none' 
-                            : 'border-l-transparent hover:bg-[#F1F5F9]/60 hover:border-l-[#64748B]/30'
+                            ? 'border-l-accent-ai bg-accent-ai-tint border-y border-r border-border shadow-none' 
+                            : 'border-l-transparent hover:bg-bg-elevated/60 hover:border-l-text-muted/30'
                         }`}
                       >
                         <div className={`text-xs font-bold font-display ${isActive ? 'text-text-primary' : 'text-text-secondary'}`}>
@@ -506,32 +507,32 @@ export default function HomePage() {
                 const cat = category.toLowerCase();
                 if (cat.includes("ai") || cat.includes("ml") || cat.includes("agent") || cat.includes("intelligence")) {
                   return { 
-                    accent: "text-[#2563EB]", 
-                    border: "border-[#2563EB]/25", 
-                    borderL: "border-l-[#2563EB]", 
-                    bg: "bg-[#EFF6FF]" 
+                    accent: "text-accent-ai", 
+                    border: "border-accent-ai/25", 
+                    borderL: "border-l-accent-ai", 
+                    bg: "bg-accent-ai-tint" 
                   };
                 }
                 if (cat.includes("data") || cat.includes("analytics") || cat.includes("dashboard")) {
                   return { 
-                    accent: "text-[#16A34A]", 
-                    border: "border-[#16A34A]/25", 
-                    borderL: "border-l-[#16A34A]", 
-                    bg: "bg-[#F0FDF4]" 
+                    accent: "text-accent-analytics", 
+                    border: "border-accent-analytics/25", 
+                    borderL: "border-l-accent-analytics", 
+                    bg: "bg-accent-analytics-tint" 
                   };
                 }
                 return { 
-                  accent: "text-[#B45309]", 
-                  border: "border-[#F59E0B]/25", 
-                  borderL: "border-l-[#F59E0B]", 
-                  bg: "bg-[#FFFBEB]" 
+                  accent: "text-accent-finance-dark", 
+                  border: "border-accent-finance/25", 
+                  borderL: "border-l-accent-finance", 
+                  bg: "bg-accent-finance-tint" 
                 };
               };
               
               const activeProjectColors = getProjectAccent(activeProject.category);
 
               return (
-                <div className="lg:col-span-7 bg-white border border-[#E2E8F0] rounded-2xl p-6 shadow-none flex flex-col justify-between min-h-[380px] relative overflow-hidden group">
+                <div className="lg:col-span-7 bg-bg-surface border border-border rounded-2xl p-6 shadow-none flex flex-col justify-between min-h-[380px] relative overflow-hidden group">
                   {/* Subtle Grid overlay */}
                   <div className="absolute inset-0 bg-[linear-gradient(rgba(15,23,42,0.015)_1px,transparent_1px),linear-gradient(90deg,rgba(15,23,42,0.015)_1px,transparent_1px)] bg-[size:12px_12px] pointer-events-none" />
                   
@@ -555,15 +556,15 @@ export default function HomePage() {
                     </div>
 
                     {/* Decorative category-based SVG visualization on the right, matching user's image! */}
-                    <div className="w-full h-32 bg-[#F1F5F9] border border-[#E2E8F0] rounded-xl flex items-center justify-center relative overflow-hidden p-4">
+                    <div className="w-full h-32 bg-bg-elevated border border-border rounded-xl flex items-center justify-center relative overflow-hidden p-4">
                       {/* Dynamic Category SVG */}
                       {activeProject.category.toLowerCase().includes("ai") || activeProject.category.toLowerCase().includes("machine") ? (
                         /* AI Neural Nodes */
-                        <svg viewBox="0 0 200 100" className="w-full h-full text-[#2563EB]/40">
-                          <circle cx="40" cy="50" r="4" fill="#2563EB" className="animate-pulse" />
-                          <circle cx="100" cy="30" r="4" fill="#2563EB" className="opacity-70" />
-                          <circle cx="100" cy="70" r="4" fill="#2563EB" className="opacity-70" />
-                          <circle cx="160" cy="50" r="4" fill="#2563EB" className="animate-pulse" />
+                        <svg viewBox="0 0 200 100" className="w-full h-full text-accent-ai/40">
+                          <circle cx="40" cy="50" r="4" fill="var(--accent-ai)" className="animate-pulse" />
+                          <circle cx="100" cy="30" r="4" fill="var(--accent-ai)" className="opacity-70" />
+                          <circle cx="100" cy="70" r="4" fill="var(--accent-ai)" className="opacity-70" />
+                          <circle cx="160" cy="50" r="4" fill="var(--accent-ai)" className="animate-pulse" />
                           <line x1="40" y1="50" x2="100" y2="30" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
                           <line x1="40" y1="50" x2="100" y2="70" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
                           <line x1="100" y1="30" x2="160" y2="50" stroke="currentColor" strokeWidth="1" strokeDasharray="3 3" />
@@ -571,20 +572,20 @@ export default function HomePage() {
                         </svg>
                       ) : activeProject.category.toLowerCase().includes("data") || activeProject.category.toLowerCase().includes("analytics") ? (
                         /* Data Bar Chart, matching user's image! */
-                        <svg viewBox="0 0 200 100" className="w-full h-full text-[#16A34A]/40">
-                          <rect x="20" y="60" width="12" height="30" fill="#16A34A" className="opacity-40 animate-pulse" rx="1" style={{ animationDelay: '0.1s' }} />
-                          <rect x="50" y="40" width="12" height="50" fill="#16A34A" className="opacity-60 animate-pulse" rx="1" style={{ animationDelay: '0.3s' }} />
-                          <rect x="80" y="70" width="12" height="20" fill="#16A34A" className="opacity-40 animate-pulse" rx="1" style={{ animationDelay: '0.5s' }} />
-                          <rect x="110" y="30" width="12" height="60" fill="#16A34A" className="opacity-80 animate-pulse" rx="1" style={{ animationDelay: '0.2s' }} />
-                          <rect x="140" y="50" width="12" height="40" fill="#16A34A" className="opacity-60 animate-pulse" rx="1" style={{ animationDelay: '0.4s' }} />
-                          <rect x="170" y="20" width="12" height="70" fill="#16A34A" className="animate-pulse" rx="1" style={{ animationDelay: '0.6s' }} />
+                        <svg viewBox="0 0 200 100" className="w-full h-full text-accent-analytics/40">
+                          <rect x="20" y="60" width="12" height="30" fill="var(--accent-analytics)" className="opacity-40 animate-pulse" rx="1" style={{ animationDelay: '0.1s' }} />
+                          <rect x="50" y="40" width="12" height="50" fill="var(--accent-analytics)" className="opacity-60 animate-pulse" rx="1" style={{ animationDelay: '0.3s' }} />
+                          <rect x="80" y="70" width="12" height="20" fill="var(--accent-analytics)" className="opacity-40 animate-pulse" rx="1" style={{ animationDelay: '0.5s' }} />
+                          <rect x="110" y="30" width="12" height="60" fill="var(--accent-analytics)" className="opacity-80 animate-pulse" rx="1" style={{ animationDelay: '0.2s' }} />
+                          <rect x="140" y="50" width="12" height="40" fill="var(--accent-analytics)" className="opacity-60 animate-pulse" rx="1" style={{ animationDelay: '0.4s' }} />
+                          <rect x="170" y="20" width="12" height="70" fill="var(--accent-analytics)" className="animate-pulse" rx="1" style={{ animationDelay: '0.6s' }} />
                           <line x1="10" y1="90" x2="190" y2="90" stroke="currentColor" strokeWidth="1" />
                         </svg>
                       ) : (
                         /* Finance Upward Spline */
-                        <svg viewBox="0 0 200 100" className="w-full h-full text-[#F59E0B]/40">
-                          <path d="M 20,80 Q 70,60 120,40 T 180,20" fill="none" stroke="#F59E0B" strokeWidth="2" strokeLinecap="round" className="animate-pulse" />
-                          <circle cx="180" cy="20" r="4" fill="#2563EB" />
+                        <svg viewBox="0 0 200 100" className="w-full h-full text-accent-finance/40">
+                          <path d="M 20,80 Q 70,60 120,40 T 180,20" fill="none" stroke="var(--accent-finance)" strokeWidth="2" strokeLinecap="round" className="animate-pulse" />
+                          <circle cx="180" cy="20" r="4" fill="var(--accent-ai)" />
                           <line x1="10" y1="90" x2="190" y2="90" stroke="currentColor" strokeWidth="1" />
                         </svg>
                       )}
@@ -595,7 +596,7 @@ export default function HomePage() {
                     {activeProject.tags && activeProject.tags.length > 0 && (
                       <div className="flex flex-wrap gap-1.5">
                         {activeProject.tags.slice(0, 3).map((tag: string) => (
-                          <span key={tag} className="text-[9px] font-mono text-[#64748B] bg-white px-2 py-0.5 rounded border border-[#E2E8F0]">
+                          <span key={tag} className="text-[9px] font-mono text-text-muted bg-bg-surface px-2 py-0.5 rounded border border-border">
                             #{tag.toLowerCase()}
                           </span>
                         ))}
@@ -604,7 +605,7 @@ export default function HomePage() {
                     
                     <Link
                       to={`/project/${activeProject.slug}`}
-                      className="inline-flex items-center justify-center gap-1.5 bg-[#2563EB] hover:bg-[#1D4ED8] hover:-translate-y-0.5 text-white text-[10px] font-mono font-medium uppercase tracking-wider px-4 py-2.5 rounded-lg shadow-none transition-all duration-150 ease-in-out select-none whitespace-nowrap self-end sm:self-auto"
+                      className="inline-flex items-center justify-center gap-1.5 bg-accent-ai hover:bg-accent-ai-hover hover:-translate-y-0.5 text-white text-[10px] font-mono font-medium uppercase tracking-wider px-4 py-2.5 rounded-lg shadow-none transition-all duration-150 ease-in-out select-none whitespace-nowrap self-end sm:self-auto"
                     >
                       COMPILE SPEC &rarr;
                     </Link>
@@ -636,28 +637,16 @@ export default function HomePage() {
           {data.latestBlog && data.latestBlog.length > 0 ? (
             <div className="space-y-4">
               {data.latestBlog.slice(0, 2).map((blog: any) => (
-                <div 
-                  key={blog._id} 
-                  className="bg-white border border-[#E2E8F0] hover:border-[#F59E0B]/50 rounded-xl p-5 hover:-translate-y-0.5 transition-all duration-150 ease-in-out group shadow-none flex flex-col justify-between gap-4"
-                >
-                  <div className="space-y-2">
-                    <div className="flex justify-between items-center text-[10px] font-mono text-text-muted">
-                      <span className="uppercase text-[#B45309] font-bold">{blog.category || "FINANCE"}</span>
-                      <span>{blog.readingTime || 5} MIN READ</span>
-                    </div>
-                    <h3 className="text-sm font-bold text-[#0F172A] group-hover:text-[#B45309] transition-colors font-display">
-                      {blog.title}
-                    </h3>
-                  </div>
-                  <div className="flex justify-between items-center">
-                    <span className="text-[10px] font-mono text-text-muted">
-                      {new Date(blog.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
-                    </span>
-                    <Link to={`/blog/${blog.slug}`} className="text-label text-[#B45309] hover:underline">
-                      READ POST
-                    </Link>
-                  </div>
-                </div>
+                <Card
+                  key={blog._id}
+                  variant="blog"
+                  title={blog.title}
+                  category={blog.category || "FINANCE"}
+                  date={blog.createdAt}
+                  meta={blog.readingTime || 5}
+                  slug={blog.slug}
+                  actionLabel="READ POST"
+                />
               ))}
             </div>
           ) : (
@@ -678,22 +667,15 @@ export default function HomePage() {
           </div>
 
           {data.githubActivity && data.githubActivity.length > 0 ? (
-            <div className="bg-white border border-[#E2E8F0] rounded-xl p-6 space-y-4 shadow-none max-h-[310px] overflow-y-auto">
+            <div className="bg-bg-surface border border-border rounded-xl p-6 space-y-4 shadow-none max-h-[310px] overflow-y-auto">
               {data.githubActivity.slice(0, 4).map((act: any, idx: number) => (
-                <div
+                <Card
                   key={idx}
-                  className="border-b border-divider pb-3.5 last:border-b-0 last:pb-0 flex items-start justify-between gap-3 text-xs"
-                >
-                  <div className="space-y-1.5">
-                    <span className="text-[10px] text-[#16A34A] font-bold uppercase tracking-wider font-mono">
-                      {act.repoName.split("/")[1] || act.repoName}
-                    </span>
-                    <p className="text-text-secondary leading-relaxed text-[11px] font-sans">{act.message}</p>
-                  </div>
-                  <span className="text-[9px] font-mono text-text-muted shrink-0 mt-0.5">
-                    {new Date(act.createdAt).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
-                  </span>
-                </div>
+                  variant="log"
+                  category={act.repoName.split("/")[1] || act.repoName}
+                  description={act.message}
+                  date={act.createdAt}
+                />
               ))}
             </div>
           ) : (
@@ -717,31 +699,16 @@ export default function HomePage() {
         {data.research && data.research.length > 0 ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {data.research.slice(0, 3).map((paper) => (
-              <div
+              <Card
                 key={paper._id}
-                className="flex flex-col justify-between bg-white border border-[#E2E8F0] rounded-xl p-5 hover:border-[#2563EB]/40 hover:-translate-y-0.5 transition-all duration-150 ease-in-out group shadow-none"
-              >
-                <div className="space-y-3.5">
-                  <div className="flex justify-between items-center text-[10px] font-mono text-text-muted">
-                    <span className="uppercase text-[#2563EB] font-bold">{paper.category}</span>
-                    <span>{paper.readingTime} MIN READ</span>
-                  </div>
-                  <h3 className="text-h4 font-bold text-text-primary group-hover:text-[#2563EB] transition-colors font-display">
-                    {paper.title}
-                  </h3>
-                </div>
-                <div className="border-t border-divider mt-6 pt-4 flex justify-between items-center text-xs">
-                  <span className="text-text-muted text-[10px] font-mono">
-                    {new Date(paper.createdAt).toLocaleDateString(undefined, { year: "numeric", month: "short" })}
-                  </span>
-                  <Link
-                    to={`/research/${paper.slug}`}
-                    className="text-label text-[#2563EB] hover:text-[#1D4ED8] transition-colors"
-                  >
-                    READ NOTE
-                  </Link>
-                </div>
-              </div>
+                variant="research"
+                title={paper.title}
+                category={paper.category}
+                date={paper.createdAt}
+                meta={paper.readingTime}
+                slug={paper.slug}
+                actionLabel="READ NOTE"
+              />
             ))}
           </div>
         ) : (
@@ -753,32 +720,32 @@ export default function HomePage() {
       <section className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-6 pt-6">
         
         {/* Left CTA: Financial Advisory / Mentorship */}
-        <div className="bg-white border border-[#E2E8F0] hover:border-[#F59E0B]/40 hover:-translate-y-0.5 rounded-2xl p-8 flex flex-col justify-between gap-6 shadow-none transition-all duration-150 ease-in-out">
+        <div className="bg-bg-surface border border-border hover:border-accent-finance/40 hover:-translate-y-0.5 rounded-2xl p-8 flex flex-col justify-between gap-6 shadow-none transition-all duration-150 ease-in-out">
           <div className="space-y-3">
-            <h3 className="text-label text-[#B45309] font-bold flex items-center gap-2">
+            <h3 className="text-label text-accent-finance-dark font-bold flex items-center gap-2">
               <GraduationCap size={16} /> // MENTORSHIP_CHANNEL
             </h3>
             <p className="text-xs text-text-secondary leading-relaxed font-sans">{data.mentorshipCta}</p>
           </div>
           <Link
             to="/mentorship"
-            className="inline-flex justify-center items-center bg-white hover:bg-[#F8FAFC] text-[#0F172A] border border-[#E2E8F0] text-xs font-semibold px-5 py-3 rounded-lg uppercase tracking-wider transition-all self-start cursor-pointer font-mono shadow-none"
+            className="inline-flex justify-center items-center bg-bg-surface hover:bg-bg-base text-text-primary border border-border text-xs font-semibold px-5 py-3 rounded-lg uppercase tracking-wider transition-all self-start cursor-pointer font-mono shadow-none"
           >
             Request Mentorship
           </Link>
         </div>
 
         {/* Right CTA: AI & Data Engineering Collab */}
-        <div className="bg-white border border-[#E2E8F0] hover:border-[#2563EB]/40 hover:-translate-y-0.5 rounded-2xl p-8 flex flex-col justify-between gap-6 shadow-none transition-all duration-150 ease-in-out">
+        <div className="bg-bg-surface border border-border hover:border-accent-ai/40 hover:-translate-y-0.5 rounded-2xl p-8 flex flex-col justify-between gap-6 shadow-none transition-all duration-150 ease-in-out">
           <div className="space-y-3">
-            <h3 className="text-label text-[#2563EB] font-bold flex items-center gap-2">
+            <h3 className="text-label text-accent-ai font-bold flex items-center gap-2">
               <MessageSquare size={16} /> // COLLAB_GATEWAY
             </h3>
             <p className="text-xs text-text-secondary leading-relaxed font-sans">{data.contactCta}</p>
           </div>
           <Link
             to="/contact"
-            className="inline-flex justify-center items-center bg-[#2563EB] hover:bg-[#1D4ED8] hover:-translate-y-0.5 text-white text-xs font-bold px-5 py-3 rounded-lg uppercase tracking-wider transition-all self-start cursor-pointer font-mono shadow-none"
+            className="inline-flex justify-center items-center bg-accent-ai hover:bg-accent-ai-hover hover:-translate-y-0.5 text-white text-xs font-bold px-5 py-3 rounded-lg uppercase tracking-wider transition-all self-start cursor-pointer font-mono shadow-none"
           >
             Start Project
           </Link>

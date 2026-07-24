@@ -15,8 +15,14 @@
   
   /* Brand accents */
   --color-accent-ai: var(--accent-ai);
+  --color-accent-ai-hover: var(--accent-ai-hover);
   --color-accent-analytics: var(--accent-analytics);
   --color-accent-finance: var(--accent-finance);
+  --color-accent-finance-dark: var(--accent-finance-dark);
+  
+  --color-accent-ai-tint: var(--accent-ai-tint);
+  --color-accent-analytics-tint: var(--accent-analytics-tint);
+  --color-accent-finance-tint: var(--accent-finance-tint);
   
   /* Semantic state indicators */
   --color-success: var(--success);
@@ -53,8 +59,14 @@
   
   /* Brand domains */
   --accent-ai: #2563EB;         /* Blue - Technology / AI / Engineering */
+  --accent-ai-hover: #1D4ED8;
   --accent-analytics: #16A34A;  /* Success green - Data / Graphs / Analytics activity */
   --accent-finance: #F59E0B;    /* Amber - Financial / Advisory / Mentorship */
+  --accent-finance-dark: #B45309;
+  
+  --accent-ai-tint: #EFF6FF;
+  --accent-analytics-tint: #F0FDF4;
+  --accent-finance-tint: #FFFBEB;
   
   /* System states */
   --success: #16A34A;

@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { Calendar, Clock, Download, ArrowRight, BookOpen } from "lucide-react";
 
 interface CardProps {
-  variant: "project" | "blog" | "research" | "resource" | "service";
-  title: string;
+  variant: "project" | "blog" | "research" | "resource" | "service" | "log";
+  title?: string;
   subtitle?: string;
   description?: string;
   category?: string;
@@ -15,11 +15,12 @@ interface CardProps {
   linkUrl?: string;
   price?: number;
   actionButton?: ReactNode;
+  actionLabel?: string;
 }
 
 export default function Card({
   variant,
-  title,
+  title = "",
   subtitle,
   description,
   category,
@@ -30,7 +31,25 @@ export default function Card({
   linkUrl,
   price,
   actionButton,
+  actionLabel,
 }: CardProps) {
+  // Early return for log row variant
+  if (variant === "log") {
+    return (
+      <div className="border-b border-divider pb-3.5 last:border-b-0 last:pb-0 flex items-start justify-between gap-3 text-xs">
+        <div className="space-y-1.5">
+          <span className="text-[10px] text-accent-analytics font-bold uppercase tracking-wider font-mono">
+            {category}
+          </span>
+          <p className="text-text-secondary leading-relaxed text-[11px] font-sans">{description}</p>
+        </div>
+        <span className="text-[9px] font-mono text-text-muted shrink-0 mt-0.5">
+          {date && new Date(date).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+        </span>
+      </div>
+    );
+  }
+
   // Domain accent color resolver
   const accentConfig = {
     project: {
@@ -65,13 +84,13 @@ export default function Card({
     },
   };
 
-  const current = accentConfig[variant];
+  const current = accentConfig[variant as "project" | "blog" | "research" | "resource" | "service"];
 
   // Resolve target url path
   const targetUrl = linkUrl || (slug ? `/${variant}/${slug}` : "#");
 
   return (
-    <div className={`flex flex-col justify-between bg-bg-surface border border-border rounded-xl p-6 transition-all duration-300 group shadow-md ${current.border}`}>
+    <div className={`flex flex-col justify-between bg-bg-surface border border-border rounded-xl p-6 transition-all duration-300 group shadow-none ${current.border}`}>
       <div className="space-y-4">
         {/* Top Header Row */}
         <div className="flex justify-between items-center text-[10px] font-mono text-text-muted">
@@ -157,7 +176,7 @@ export default function Card({
               to={targetUrl}
               className={`text-label font-bold flex items-center gap-1 transition-colors ${current.btn} hover:text-text-primary`}
             >
-              {variant === "resource" ? "DOWNLOAD" : "EXPLORE"} <ArrowRight size={12} />
+              {actionLabel || (variant === "resource" ? "DOWNLOAD" : "EXPLORE")} <ArrowRight size={12} />
             </Link>
           )}
         </div>
