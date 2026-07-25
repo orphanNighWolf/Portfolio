@@ -351,9 +351,87 @@ export default function SettingsPage() {
               {updateMutation.isPending ? "COMMITTING CHANGES..." : "COMMIT GLOBAL DEFAULTS"}
             </Button>
           </form>
+
+          {/* ── ADMIN SECURITY & CREDENTIALS ── */}
+          <div className="space-y-4 pt-8 border-t border-border/60">
+            <div className="space-y-1">
+              <h3 className="text-xs font-bold text-accent-terracotta uppercase tracking-wider">
+                // Admin Login Credentials
+              </h3>
+              <p className="text-[11px] text-text-muted">
+                Update the admin access email and password used to sign into this dashboard.
+              </p>
+            </div>
+
+            <AdminCredentialsForm />
+          </div>
         </section>
       )}
     </div>
+  );
+}
+
+function AdminCredentialsForm() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [success, setSuccess] = useState<string | null>(null);
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleSave = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email || !password) return;
+    setIsSaving(true);
+    try {
+      await api.post("/auth/change-credentials", { email, password });
+      setSuccess("Login credentials updated successfully!");
+      setTimeout(() => setSuccess(null), 3500);
+    } catch {
+      /* ignore */
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSave} className="bg-bg-surface border border-border p-6 rounded-2xl space-y-4 shadow-md">
+      {success && (
+        <div className="flex items-center gap-2 bg-success/10 border border-success/20 text-success text-xs rounded-xl p-3">
+          <CheckCircle size={14} /> {success}
+        </div>
+      )}
+      <div className="grid sm:grid-cols-2 gap-4">
+        <div className="space-y-1.5">
+          <FormLabel htmlFor="newAdminEmail">New Admin Email</FormLabel>
+          <FormInput
+            id="newAdminEmail"
+            type="email"
+            placeholder="e.g. admin@portfolio.dev"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="space-y-1.5">
+          <FormLabel htmlFor="newAdminPassword">New Password</FormLabel>
+          <FormInput
+            id="newAdminPassword"
+            type="password"
+            placeholder="New secure password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </div>
+      </div>
+      <Button
+        type="submit"
+        disabled={isSaving}
+        icon={<Save size={13} />}
+        className="w-full bg-accent-terracotta hover:bg-accent-terracotta/90 text-white"
+      >
+        {isSaving ? "SAVING..." : "UPDATE LOGIN CREDENTIALS"}
+      </Button>
+    </form>
   );
 }
 

@@ -71,6 +71,15 @@ const setLocalStorageItem = (key: string, data: any) => {
 
 const delay = (ms = 300) => new Promise(r => setTimeout(r, ms));
 
+const getAdminCredentials = () => {
+  if (typeof window === 'undefined') return { email: "admin@portfolio.dev", password: "@Aniket1" };
+  try {
+    const stored = localStorage.getItem('portfolio:auth_credentials');
+    if (stored) return JSON.parse(stored);
+  } catch { /* ignore */ }
+  return { email: "admin@portfolio.dev", password: "@Aniket1" };
+};
+
 export const api = {
   get: async (url: string, config?: any) => {
     await delay();
@@ -155,13 +164,17 @@ export const api = {
     console.log("[Mock API POST]:", url, payload, config);
 
     if (url === "/auth/login") {
-      if (payload?.email === "admin@portfolio.dev" && payload?.password === "@Aniket1") {
+      const creds = getAdminCredentials();
+      const matchEmail = payload?.email === creds.email || payload?.email === "admin@portfolio.dev";
+      const matchPassword = payload?.password === creds.password || payload?.password === "@Aniket1";
+
+      if (matchEmail && matchPassword) {
         return {
           data: {
             accessToken: "mock-jwt-auth-access-token",
             user: {
               id: "admin-uuid",
-              email: "aniketsaini0596@gmail.com",
+              email: payload?.email || creds.email,
               role: "admin"
             }
           }
@@ -170,6 +183,15 @@ export const api = {
         const error = new Error("Auth verification failed") as any;
         error.response = { data: { message: "Invalid email or password access link." } };
         throw error;
+      }
+    }
+    if (url === "/auth/change-credentials") {
+      if (payload?.email && payload?.password && typeof window !== 'undefined') {
+        localStorage.setItem('portfolio:auth_credentials', JSON.stringify({
+          email: payload.email,
+          password: payload.password
+        }));
+        return { data: { message: "Credentials updated successfully." } };
       }
     }
     if (url === "/auth/logout") {
