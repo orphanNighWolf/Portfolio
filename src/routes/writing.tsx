@@ -2,6 +2,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import { portfolioData } from '../lib/portfolio-data'
 import { Calendar, Clock, ArrowUpRight } from 'lucide-react'
 
+import SectionGuard from '../components/SectionGuard'
+
 export const Route = createFileRoute('/writing')({
   component: WritingPage,
   head: () => ({
@@ -20,7 +22,8 @@ function WritingPage() {
   const { blogs } = portfolioData;
 
   return (
-    <div className="max-w-2xl mx-auto space-y-12 page-transition">
+    <SectionGuard section="blogs">
+      <div className="max-w-2xl mx-auto space-y-12 page-transition">
       {/* Header */}
       <section className="space-y-4">
         <div className="space-y-1 border-b border-border/40 pb-4">
@@ -65,6 +68,7 @@ function WritingPage() {
         ))}
       </div>
     </div>
+  </SectionGuard>
   );
 }
 export default WritingPage;

@@ -5,6 +5,9 @@ import { useReducedMotion } from '../hooks/use-reduced-motion'
 import { DataConstellation } from '../components/portfolio/DataConstellation'
 import { StaticConstellation } from '../components/portfolio/StaticConstellation'
 
+import { useQuery } from '@tanstack/react-query'
+import { api } from '../lib/axios'
+
 export const Route = createFileRoute('/')({
   component: Home,
   head: () => ({
@@ -22,6 +25,17 @@ export const Route = createFileRoute('/')({
 function Home() {
   const { profile, projects, skills, blogs } = portfolioData;
   const isReduced = useReducedMotion();
+
+  const { data: serverSettings } = useQuery({
+    queryKey: ["global-settings"],
+    queryFn: async () => {
+      const res = await api.get("/settings");
+      return res.data.data;
+    },
+    staleTime: 30 * 1000,
+  });
+
+  const enabledSections = serverSettings?.enabledSections || {};
 
   const tracks = [
     {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/useAuthStore";
 import { api } from "@/lib/axios";
 import { FolderGit2, Newspaper, Mail, Users, Eye, RefreshCw } from "lucide-react";
@@ -162,6 +162,140 @@ export default function AdminDashboard() {
             <span className="font-mono tabular-nums">{new Date().toLocaleTimeString()}</span>
           </div>
         </div>
+      </div>
+
+      {/* Website Section Visibility Controls (ON / OFF) */}
+      <SectionTogglePanel />
+    </div>
+  );
+}
+
+function SectionTogglePanel() {
+  const queryClient = useQueryClient();
+  const [updatingSection, setUpdatingSection] = useState<string | null>(null);
+
+  const { data: serverSettings } = useQuery({
+    queryKey: ["global-settings"],
+    queryFn: async () => {
+      const res = await api.get("/settings");
+      return res.data.data;
+    },
+  });
+
+  const enabledSections: Record<string, boolean> = serverSettings?.enabledSections || {
+    about: true,
+    skills: true,
+    projects: true,
+    blogs: true,
+    journey: true,
+    contact: true,
+    mentorship: true,
+    achievements: true,
+    resources: true,
+    resume: true,
+    research: true,
+  };
+
+  const sectionsList = [
+    { key: "about", label: "About Page / Section", path: "/about" },
+    { key: "skills", label: "Skills Inventory", path: "/skills" },
+    { key: "projects", label: "Projects Gallery", path: "/projects" },
+    { key: "blogs", label: "Writing & Blogs", path: "/writing" },
+    { key: "journey", label: "Career Journey", path: "/journey" },
+    { key: "contact", label: "Contact Form", path: "/contact" },
+    { key: "mentorship", label: "Mentorship", path: "/admin/mentorship" },
+    { key: "achievements", label: "Achievements", path: "/admin/achievements" },
+    { key: "resources", label: "Resources", path: "/admin/resources" },
+    { key: "resume", label: "Resume", path: "/admin/resume" },
+    { key: "research", label: "Research Notes", path: "/admin/research" },
+  ];
+
+  const toggleSection = async (sectionKey: string) => {
+    setUpdatingSection(sectionKey);
+    const updatedSections = {
+      ...enabledSections,
+      [sectionKey]: !enabledSections[sectionKey],
+    };
+
+    const newSettings = {
+      ...serverSettings,
+      enabledSections: updatedSections,
+    };
+
+    try {
+      await api.put("/settings", newSettings);
+      queryClient.invalidateQueries({ queryKey: ["global-settings"] });
+    } catch (err) {
+      console.error("Failed to toggle section:", err);
+    } finally {
+      setUpdatingSection(null);
+    }
+  };
+
+  return (
+    <div className="bg-bg-surface border border-border rounded-2xl p-6 space-y-6 shadow-md">
+      <div className="flex justify-between items-center flex-wrap gap-2 border-b border-divider pb-4">
+        <div>
+          <h2 className="text-md font-bold text-text-primary uppercase tracking-wider font-display flex items-center gap-2">
+            <span className="w-2 h-2 rounded-full bg-accent-terracotta" />
+            Website Section Controls (ON / OFF)
+          </h2>
+          <p className="text-xs text-text-muted mt-1">
+            Turn sections ON or OFF. Disabled sections are hidden from navigation and locked from public view.
+          </p>
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {sectionsList.map((sec) => {
+          const isON = enabledSections[sec.key] ?? true;
+          const isPending = updatingSection === sec.key;
+
+          return (
+            <div
+              key={sec.key}
+              onClick={() => !isPending && toggleSection(sec.key)}
+              className={`p-4 rounded-xl border transition-all duration-300 flex items-center justify-between cursor-pointer select-none ${
+                isON
+                  ? "bg-bg-surface border-accent-terracotta/40 hover:border-accent-terracotta shadow-sm"
+                  : "bg-bg-elevated/40 border-border/50 opacity-60 hover:opacity-100"
+              }`}
+            >
+              <div className="space-y-1 min-w-0 pr-2">
+                <span className="text-xs font-bold text-text-primary block truncate">
+                  {sec.label}
+                </span>
+                <span className="text-[9px] font-mono text-text-muted block">
+                  //{sec.key}_module
+                </span>
+              </div>
+
+              <div className="flex items-center gap-2 shrink-0">
+                <span
+                  className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded ${
+                    isON
+                      ? "bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"
+                      : "bg-error/10 text-error border border-error/20"
+                  }`}
+                >
+                  {isPending ? "SAVING..." : isON ? "ACTIVE (ON)" : "OFFLINE (OFF)"}
+                </span>
+
+                <div
+                  className={`w-10 h-6 rounded-full relative transition-colors p-0.5 ${
+                    isON ? "bg-accent-terracotta" : "bg-bg-elevated border border-border"
+                  }`}
+                >
+                  <div
+                    className={`w-5 h-5 rounded-full bg-white shadow-md transition-transform ${
+                      isON ? "translate-x-4" : "translate-x-0"
+                    }`}
+                  />
+                </div>
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

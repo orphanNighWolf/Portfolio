@@ -3,6 +3,9 @@ import { Sparkles, Zap, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { useReducedMotion, useReducedMotionOverride } from "../../hooks/use-reduced-motion";
 
+import { useQuery } from "@tanstack/react-query";
+import { api } from "@/lib/axios";
+
 interface ShellProps {
   children: React.ReactNode;
 }
@@ -13,15 +16,33 @@ export function Shell({ children }: ShellProps) {
   const [liveAnnouncement, setLiveAnnouncement] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
 
-  const navItems = [
-    { label: "Home", path: "/" },
-    { label: "About", path: "/about" },
-    { label: "Skills", path: "/skills" },
-    { label: "Projects", path: "/projects" },
-    { label: "Writing", path: "/writing" },
-    { label: "Journey", path: "/journey" },
-    { label: "Contact", path: "/contact" },
+  const { data: serverSettings } = useQuery({
+    queryKey: ["global-settings"],
+    queryFn: async () => {
+      const res = await api.get("/settings");
+      return res.data.data;
+    },
+    staleTime: 30 * 1000,
+  });
+
+  const enabledSections = serverSettings?.enabledSections || {};
+
+  const allNavItems = [
+    { label: "Home", path: "/", key: "home" },
+    { label: "About", path: "/about", key: "about" },
+    { label: "Skills", path: "/skills", key: "skills" },
+    { label: "Projects", path: "/projects", key: "projects" },
+    { label: "Writing", path: "/writing", key: "blogs" },
+    { label: "Journey", path: "/journey", key: "journey" },
+    { label: "Contact", path: "/contact", key: "contact" },
   ];
+
+  const navItems = allNavItems.filter((item) => {
+    if (item.key === "home") return true;
+    return enabledSections[item.key] ?? true;
+  });
+
+  const isContactEnabled = enabledSections["contact"] ?? true;
 
   return (
     <div className={`min-h-screen flex flex-col font-sans ${isReduced ? "motion-disabled" : ""}`}>
@@ -77,12 +98,14 @@ export function Shell({ children }: ShellProps) {
             </span>
 
             {/* Terracotta "Say hi" CTA button */}
-            <Link
-              to="/contact"
-              className="px-4.5 py-2 rounded-full bg-accent-terracotta hover:opacity-90 text-white text-xs font-mono uppercase tracking-wider transition-opacity shadow-sm hidden sm:inline-block"
-            >
-              Say hi
-            </Link>
+            {isContactEnabled && (
+              <Link
+                to="/contact"
+                className="px-4.5 py-2 rounded-full bg-accent-terracotta hover:opacity-90 text-white text-xs font-mono uppercase tracking-wider transition-opacity shadow-sm hidden sm:inline-block"
+              >
+                Say hi
+              </Link>
+            )}
 
             {/* Mobile Menu Button */}
             <button
@@ -111,14 +134,18 @@ export function Shell({ children }: ShellProps) {
                   {item.label}
                 </Link>
               ))}
-              <div className="h-px bg-border/40 my-2" />
-              <Link
-                to="/contact"
-                onClick={() => setMenuOpen(false)}
-                className="w-full text-center py-3 rounded-2xl bg-accent-terracotta hover:opacity-90 text-white text-xs font-mono uppercase tracking-wider transition-opacity"
-              >
-                Say hi
-              </Link>
+              {isContactEnabled && (
+                <>
+                  <div className="h-px bg-border/40 my-2" />
+                  <Link
+                    to="/contact"
+                    onClick={() => setMenuOpen(false)}
+                    className="w-full text-center py-3 rounded-2xl bg-accent-terracotta hover:opacity-90 text-white text-xs font-mono uppercase tracking-wider transition-opacity"
+                  >
+                    Say hi
+                  </Link>
+                </>
+              )}
             </nav>
           </div>
         )}

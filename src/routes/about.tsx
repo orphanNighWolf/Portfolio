@@ -2,6 +2,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import { portfolioData } from '../lib/portfolio-data'
 import { Briefcase, Calendar, ChevronRight, GraduationCap, Award } from 'lucide-react'
 
+import SectionGuard from '../components/SectionGuard'
+
 export const Route = createFileRoute('/about')({
   component: AboutPage,
   head: () => ({
@@ -27,7 +29,8 @@ function AboutPage() {
   ];
 
   return (
-    <div className="max-w-2xl mx-auto space-y-16 py-4 page-transition">
+    <SectionGuard section="about">
+      <div className="max-w-2xl mx-auto space-y-16 py-4 page-transition">
       {/* Editorial Profile Description */}
       <section className="space-y-6">
         <div className="space-y-1 border-b border-border/40 pb-4">
@@ -146,12 +149,12 @@ function AboutPage() {
                   <span className="text-[9px] font-mono text-text-muted block uppercase tracking-wider">{cred.issuer}</span>
                 </div>
               </div>
-              <span className="text-[10px] font-mono text-text-secondary font-semibold">{cred.date}</span>
             </div>
           ))}
         </div>
       </section>
     </div>
+  </SectionGuard>
   );
 }
 export default AboutPage;

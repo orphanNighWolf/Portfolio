@@ -3,6 +3,8 @@ import { portfolioData } from '../lib/portfolio-data'
 import { Mail, Github, Linkedin, Send, FileText } from 'lucide-react'
 import { useState } from 'react'
 
+import SectionGuard from '../components/SectionGuard'
+
 export const Route = createFileRoute('/contact')({
   component: ContactPage,
   head: () => ({
@@ -39,7 +41,8 @@ function ContactPage() {
   };
 
   return (
-    <div className="space-y-12 page-transition">
+    <SectionGuard section="contact">
+      <div className="space-y-12 page-transition">
       {/* Header */}
       <section className="space-y-4">
         <div className="space-y-1 border-b border-border/40 pb-4">
@@ -191,6 +194,7 @@ function ContactPage() {
         </div>
       </div>
     </div>
+  </SectionGuard>
   );
 }
 export default ContactPage;

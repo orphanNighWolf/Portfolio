@@ -3,6 +3,8 @@ import { portfolioData } from '../lib/portfolio-data'
 import { useState } from 'react'
 import { Github, Folder, ExternalLink, Search } from 'lucide-react'
 
+import SectionGuard from '../components/SectionGuard'
+
 export const Route = createFileRoute('/projects')({
   component: ProjectsPage,
   head: () => ({
@@ -33,7 +35,8 @@ function ProjectsPage() {
   });
 
   return (
-    <div className="space-y-12 page-transition">
+    <SectionGuard section="projects">
+      <div className="space-y-12 page-transition">
       {/* Header */}
       <section className="space-y-4">
         <div className="space-y-1 border-b border-border/40 pb-4">
@@ -151,6 +154,7 @@ function ProjectsPage() {
         })}
       </div>
     </div>
+  </SectionGuard>
   );
 }
 export default ProjectsPage;

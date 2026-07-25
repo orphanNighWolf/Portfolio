@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { portfolioData } from '../lib/portfolio-data'
+import SectionGuard from '../components/SectionGuard'
 
 export const Route = createFileRoute('/skills')({
   component: SkillsPage,
@@ -43,24 +44,25 @@ function SkillsPage() {
     {
       id: "Languages",
       title: "Tooling",
-      description: "Foundational programming dialects and developer frameworks utilized cross-pipeline.",
-      accentClass: "text-accent-terracotta border-accent-terracotta/20 bg-accent-terracotta/5",
+      description: "Primary programming languages, development toolchains, and environment infrastructure.",
+      accentClass: "text-text-primary border-border/40 bg-bg-elevated",
       bulletClass: "bg-accent-terracotta",
     }
   ];
 
   return (
-    <div className="space-y-12 page-transition">
-      {/* Header */}
-      <section className="space-y-4">
-        <div className="space-y-1 border-b border-border/40 pb-4">
-          <h1 className="text-3xl font-serif font-bold tracking-tight text-text-primary">Skills</h1>
-          <span className="text-xs font-mono text-text-muted block uppercase tracking-wider">// CORE_CAPABILITY_INDEX</span>
-        </div>
-        <p className="text-text-secondary text-sm max-w-2xl leading-relaxed">
-          Classified index of platforms, analytical packages, and development tools utilized across the data track.
-        </p>
-      </section>
+    <SectionGuard section="skills">
+      <div className="space-y-12 page-transition">
+        {/* Header */}
+        <section className="space-y-4">
+          <div className="space-y-1 border-b border-border/40 pb-4">
+            <h1 className="text-3xl font-serif font-bold tracking-tight text-text-primary">Skills</h1>
+            <span className="text-xs font-mono text-text-muted block uppercase tracking-wider">// CORE_CAPABILITY_INDEX</span>
+          </div>
+          <p className="text-text-secondary text-sm max-w-2xl leading-relaxed">
+            Classified index of platforms, analytical packages, and development tools utilized across the data track.
+          </p>
+        </section>
 
       {/* 4 Grouped Capability Cards */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 stagger-container">
@@ -106,7 +108,8 @@ function SkillsPage() {
           );
         })}
       </div>
-    </div>
+      </div>
+    </SectionGuard>
   );
 }
 export default SkillsPage;

@@ -51,7 +51,28 @@ const initMockDb = () => {
     }));
   }
   if (!localStorage.getItem('portfolio:settings')) {
-    localStorage.setItem('portfolio:settings', JSON.stringify({ email: portfolioData.profile.email }));
+    localStorage.setItem('portfolio:settings', JSON.stringify({
+      email: portfolioData.profile.email,
+      darkModeDefault: true,
+      language: "en",
+      soundToggle: true,
+      animationToggle: true,
+      accessibilityOptions: { screenReaderFriendly: true, highContrast: false },
+      themeTokens: { primaryColor: "#BB4430", secondaryColor: "#2D2A26" },
+      enabledSections: {
+        about: true,
+        skills: true,
+        projects: true,
+        blogs: true,
+        journey: true,
+        contact: true,
+        mentorship: true,
+        achievements: true,
+        resources: true,
+        resume: true,
+        research: true,
+      }
+    }));
   }
 };
 
