@@ -72,12 +72,12 @@ const setLocalStorageItem = (key: string, data: any) => {
 const delay = (ms = 300) => new Promise(r => setTimeout(r, ms));
 
 const getAdminCredentials = () => {
-  if (typeof window === 'undefined') return { email: "admin@portfolio.dev", password: "@Aniket1" };
+  if (typeof window === 'undefined') return { email: "aniketsaini0596@gmail.com", password: "@Aniket1" };
   try {
     const stored = localStorage.getItem('portfolio:auth_credentials');
     if (stored) return JSON.parse(stored);
   } catch { /* ignore */ }
-  return { email: "admin@portfolio.dev", password: "@Aniket1" };
+  return { email: "aniketsaini0596@gmail.com", password: "@Aniket1" };
 };
 
 export const api = {
