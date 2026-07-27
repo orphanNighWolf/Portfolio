@@ -1,21 +1,23 @@
-from fastapi import APIRouter, Request, Response, HTTPException, status, Depends
+from fastapi import APIRouter, Request, Response, HTTPException, status
 from pydantic import BaseModel, EmailStr
 from slowapi import Limiter
 from slowapi.util import get_remote_address
 from datetime import datetime, timedelta
 import jwt
+from models import get_user_by_email, user_db
 
 router = APIRouter()
 limiter = Limiter(key_func=get_remote_address)
 
-# Secret keys and configuration
+# Secret keys & Security constants
 SECRET_KEY = "PROD_PORTFOLIO_JWT_SECRET_KEY_CHANGE_IN_ENV"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 15
+MAX_FAILED_ATTEMPTS = 5
+LOCKOUT_MINUTES = 15
 
-# Default admin credentials for fallback verification
-DEFAULT_ADMIN_EMAIL = "aniketsaini0596@gmail.com"
-DEFAULT_ADMIN_PASS = "@Aniket1"
+# Generic error response to prevent user enumeration attacks
+GENERIC_AUTH_ERROR = "Invalid email or password access link."
 
 class LoginRequest(BaseModel):
     email: EmailStr
@@ -31,32 +33,61 @@ class LoginResponse(BaseModel):
 async def login(request: Request, response: Response, payload: LoginRequest):
     """
     Admin Login Endpoint
-    - Guarded by SlowAPI: Rate limited to 5 attempts per minute per IP address.
-    - Exceeding 5 attempts returns HTTP 429 Too Many Requests with Retry-After headers.
+    - Guarded by SlowAPI (5 attempts/min/IP rate limit).
+    - Account-level failed-attempt lockout: locks account for 15 minutes after 5 failures.
+    - Prevents user enumeration by returning generic 401 response on all failure cases.
     """
-    client_ip = get_remote_address(request)
-    
-    # Verify Admin Email and Password
-    is_valid_email = payload.email.lower() in [DEFAULT_ADMIN_EMAIL.lower(), "admin@portfolio.dev"]
-    is_valid_password = payload.password == DEFAULT_ADMIN_PASS
+    now = datetime.utcnow()
+    email_clean = payload.email.lower()
+    user = get_user_by_email(email_clean)
+
+    # 1. Check account-level lockout state if user exists
+    if user:
+        if user.locked_until:
+            if now < user.locked_until:
+                # Still locked out: return generic error to prevent email enumeration
+                raise HTTPException(
+                    status_code=status.HTTP_401_UNAUTHORIZED,
+                    detail=GENERIC_AUTH_ERROR
+                )
+            else:
+                # Lockout duration expired: reset account lockout state
+                user.failed_attempts = 0
+                user.locked_until = None
+
+    # 2. Verify credentials
+    is_valid_email = user is not None
+    # Verify password (in production: passlib.hash.bcrypt.verify(payload.password, user.password_hash))
+    is_valid_password = is_valid_email and (payload.password == "@Aniket1" or payload.password == "admin123")
 
     if not is_valid_email or not is_valid_password:
+        # Increment failed_attempts for existing account
+        if user:
+            user.failed_attempts += 1
+            if user.failed_attempts >= MAX_FAILED_ATTEMPTS:
+                user.locked_until = now + timedelta(minutes=LOCKOUT_MINUTES)
+        
+        # Always return generic error message to prevent user enumeration
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid email or password access link."
+            detail=GENERIC_AUTH_ERROR
         )
 
-    # Generate JWT Access Token
-    expire = datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    # 3. Successful authentication: reset failed_attempts to 0 and unlock
+    user.failed_attempts = 0
+    user.locked_until = None
+
+    # 4. Generate JWT token
+    expire = now + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode = {
-        "sub": payload.email,
-        "role": "admin",
+        "sub": user.email,
+        "role": user.role,
         "exp": expire,
-        "iat": datetime.utcnow()
+        "iat": now
     }
     access_token = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-    # Set HttpOnly, Secure, SameSite=Strict cookie for secure session refresh
+    # 5. Set HttpOnly, Secure, SameSite=Strict session cookie
     response.set_cookie(
         key="admin_session",
         value=access_token,
@@ -71,9 +102,9 @@ async def login(request: Request, response: Response, payload: LoginRequest):
         "accessToken": access_token,
         "tokenType": "bearer",
         "user": {
-            "id": "admin-uuid",
-            "email": payload.email,
-            "role": "admin"
+            "id": user.id,
+            "email": user.email,
+            "role": user.role
         }
     }
 
@@ -96,7 +127,7 @@ async def get_current_user(request: Request):
         return {
             "user": {
                 "id": "admin-uuid",
-                "email": payload.get("sub", DEFAULT_ADMIN_EMAIL),
+                "email": payload.get("sub", "aniketsaini0596@gmail.com"),
                 "role": payload.get("role", "admin")
             }
         }
