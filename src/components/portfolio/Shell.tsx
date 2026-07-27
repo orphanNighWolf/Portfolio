@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import { Sparkles, Zap, Menu, X } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useReducedMotion, useReducedMotionOverride } from "../../hooks/use-reduced-motion";
 
 import { useQuery } from "@tanstack/react-query";
@@ -15,6 +15,16 @@ export function Shell({ children }: ShellProps) {
   const [override, setOverride] = useReducedMotionOverride();
   const [liveAnnouncement, setLiveAnnouncement] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const handleContextMenu = (e: MouseEvent) => {
+      e.preventDefault();
+    };
+    window.addEventListener("contextmenu", handleContextMenu);
+    return () => {
+      window.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
 
   const { data: serverSettings } = useQuery({
     queryKey: ["global-settings"],
