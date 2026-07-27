@@ -101,11 +101,28 @@ const getAdminCredentials = () => {
   return { email: "aniketsaini0596@gmail.com", password: "@Aniket1" };
 };
 
+// Failed login attempt tracking & lockout state
+const failedAttempts: Record<string, { count: number; lockUntil: number | null }> = {};
+const MAX_FAILED_ATTEMPTS = 5;
+const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15 minutes
+
 export const api = {
   get: async (url: string, config?: any) => {
     await delay();
     console.log("[Mock API GET]:", url, config);
 
+    if (url === "/auth/me") {
+      const creds = getAdminCredentials();
+      return {
+        data: {
+          user: {
+            id: "admin-uuid",
+            email: creds.email,
+            role: "admin"
+          }
+        }
+      };
+    }
     if (url === "/about") {
       return { data: { data: getLocalStorageItem('portfolio:about') } };
     }
@@ -185,11 +202,39 @@ export const api = {
     console.log("[Mock API POST]:", url, payload, config);
 
     if (url === "/auth/login") {
+      const email = payload?.email?.toLowerCase() || "anonymous";
+      const now = Date.now();
+      const attemptState = failedAttempts[email] || { count: 0, lockUntil: null };
+
+      // Check if account is currently locked out
+      if (attemptState.lockUntil && now < attemptState.lockUntil) {
+        const remainingMinutes = Math.ceil((attemptState.lockUntil - now) / (60 * 1000));
+        const error = new Error("Account locked out") as any;
+        error.response = {
+          status: 429,
+          data: {
+            message: `Account locked due to multiple failed attempts. Please try again in ${remainingMinutes} minute(s).`,
+            lockout: true,
+            retryAfterSeconds: Math.ceil((attemptState.lockUntil - now) / 1000)
+          }
+        };
+        throw error;
+      }
+
+      // Reset lock if duration expired
+      if (attemptState.lockUntil && now >= attemptState.lockUntil) {
+        attemptState.count = 0;
+        attemptState.lockUntil = null;
+      }
+
       const creds = getAdminCredentials();
       const matchEmail = payload?.email === creds.email || payload?.email === "admin@portfolio.dev";
       const matchPassword = payload?.password === creds.password || payload?.password === "@Aniket1";
 
       if (matchEmail && matchPassword) {
+        // Successful login: reset failed attempts
+        failedAttempts[email] = { count: 0, lockUntil: null };
+
         return {
           data: {
             accessToken: "mock-jwt-auth-access-token",
@@ -201,8 +246,33 @@ export const api = {
           }
         };
       } else {
+        // Increment failed attempt counter
+        attemptState.count += 1;
+        if (attemptState.count >= MAX_FAILED_ATTEMPTS) {
+          attemptState.lockUntil = now + LOCKOUT_DURATION_MS;
+        }
+        failedAttempts[email] = attemptState;
+
+        const remaining = MAX_FAILED_ATTEMPTS - attemptState.count;
         const error = new Error("Auth verification failed") as any;
-        error.response = { data: { message: "Invalid email or password access link." } };
+
+        if (attemptState.lockUntil) {
+          error.response = {
+            status: 429,
+            data: {
+              message: "Too many failed attempts. Account locked for 15 minutes.",
+              lockout: true,
+              retryAfterSeconds: 900
+            }
+          };
+        } else {
+          error.response = {
+            status: 401,
+            data: {
+              message: `Invalid credentials. ${remaining} attempt(s) remaining before lockout.`
+            }
+          };
+        }
         throw error;
       }
     }

@@ -10,6 +10,7 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
+  const [isLockedOut, setIsLockedOut] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate({ from: "/login" });
@@ -25,10 +26,14 @@ export default function LoginPage() {
       const { accessToken, user } = response.data;
       
       setAuth(accessToken, user);
+      setIsLockedOut(false);
       navigate({ to: "/admin" });
     } catch (err: unknown) {
-      const axiosError = err as { response?: { data?: { message?: string; error?: string } } };
-      const msg = axiosError.response?.data?.message || axiosError.response?.data?.error || "Failed to log in. Please try again.";
+      const axiosError = err as { response?: { status?: number; data?: { message?: string; lockout?: boolean } } };
+      const msg = axiosError.response?.data?.message || "Failed to log in. Please try again.";
+      if (axiosError.response?.status === 429 || axiosError.response?.data?.lockout) {
+        setIsLockedOut(true);
+      }
       setError(msg);
     } finally {
       setIsLoading(false);
@@ -85,10 +90,10 @@ export default function LoginPage() {
         <Button
           type="submit"
           variant="primary"
-          disabled={isLoading}
+          disabled={isLoading || isLockedOut}
           className="w-full mt-2"
         >
-          {isLoading ? "AUTHORIZING LINK..." : "SECURE CONNECTION"}
+          {isLockedOut ? "ACCOUNT LOCKED" : isLoading ? "AUTHORIZING LINK..." : "SECURE CONNECTION"}
         </Button>
       </form>
     </div>
