@@ -19,14 +19,7 @@ export const Route = createFileRoute('/about')({
 })
 
 function AboutPage() {
-  const { profile, experience, journey } = portfolioData;
-
-  const credentials = [
-    { name: "AWS Certified Cloud Practitioner", issuer: "Amazon Web Services", date: "2025" },
-    { name: "dbt Certified Developer", issuer: "dbt Labs", date: "2025" },
-    { name: "PostgreSQL Advanced Professional", issuer: "Postgres Institute", date: "2024" },
-    { name: "Graduate Teaching/Research Assistant", issuer: "University Department", date: "2025" }
-  ];
+  const { profile, experience, journey, certificates } = portfolioData;
 
   return (
     <SectionGuard section="about">
@@ -140,7 +133,7 @@ function AboutPage() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {credentials.map((cred, idx) => (
+          {certificates.map((cred, idx) => (
             <div key={idx} className="p-4 rounded-xl border border-border bg-bg-surface flex items-center justify-between shadow-[0_4px_20px_rgba(23,23,23,0.01)]">
               <div className="flex items-center gap-3">
                 <Award size={16} className="text-accent-terracotta shrink-0" />
@@ -149,6 +142,7 @@ function AboutPage() {
                   <span className="text-[9px] font-mono text-text-muted block uppercase tracking-wider">{cred.issuer}</span>
                 </div>
               </div>
+              {cred.date && <span className="text-[10px] font-mono text-text-secondary font-semibold">{cred.date}</span>}
             </div>
           ))}
         </div>

@@ -112,6 +112,9 @@ function ProjectsPage() {
                 </div>
                 
                 <h3 className="text-md font-serif font-bold text-text-primary">{project.title}</h3>
+                {project.period && (
+                  <span className="text-[10px] font-mono text-text-muted block">{project.period}</span>
+                )}
                 <p className="text-xs text-text-secondary leading-relaxed">{project.description}</p>
               </div>
 
