@@ -106,6 +106,14 @@ const failedAttempts: Record<string, { count: number; lockUntil: number | null }
 const MAX_FAILED_ATTEMPTS = 5;
 const LOCKOUT_DURATION_MS = 15 * 60 * 1000; // 15 minutes
 
+// Configure default Axios instance parameters with withCredentials: true so cookies (httpOnly) are sent automatically
+export const axiosDefaults = {
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+};
+
 export const api = {
   get: async (url: string, config?: any) => {
     await delay();
