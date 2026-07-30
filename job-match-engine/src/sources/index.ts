@@ -1,7 +1,6 @@
-/**
- * /src/sources
- * Per-platform fetchers (Gmail API / LinkedIn Digest, Indeed, ZipRecruiter, Dice).
- */
+export * from './gmail.js';
+export * from './token-cache.js';
+
 export interface JobSourceFetcher {
   sourceName: string;
   fetchRawData(): Promise<unknown[]>;
