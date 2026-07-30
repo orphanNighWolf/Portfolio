@@ -17,6 +17,7 @@ import { Route as JourneyRouteImport } from './routes/journey'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as ProjectsRouteImport } from './routes/projects'
 import { Route as SkillsRouteImport } from './routes/skills'
+import { Route as ToolsRouteImport } from './routes/tools'
 import { Route as WritingRouteImport } from './routes/writing'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as AdminAboutRouteImport } from './routes/admin.about'
@@ -73,6 +74,11 @@ const ProjectsRoute = ProjectsRouteImport.update({
 const SkillsRoute = SkillsRouteImport.update({
   id: '/skills',
   path: '/skills',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ToolsRoute = ToolsRouteImport.update({
+  id: '/tools',
+  path: '/tools',
   getParentRoute: () => rootRouteImport,
 } as any)
 const WritingRoute = WritingRouteImport.update({
@@ -170,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/login': typeof LoginRoute
   '/projects': typeof ProjectsRoute
   '/skills': typeof SkillsRoute
+  '/tools': typeof ToolsRoute
   '/writing': typeof WritingRoute
   '/admin/about': typeof AdminAboutRoute
   '/admin/achievements': typeof AdminAchievementsRoute
@@ -196,6 +203,7 @@ export interface FileRoutesByTo {
   '/login': typeof LoginRoute
   '/projects': typeof ProjectsRoute
   '/skills': typeof SkillsRoute
+  '/tools': typeof ToolsRoute
   '/writing': typeof WritingRoute
   '/admin/about': typeof AdminAboutRoute
   '/admin/achievements': typeof AdminAchievementsRoute
@@ -224,6 +232,7 @@ export interface FileRoutesById {
   '/login': typeof LoginRoute
   '/projects': typeof ProjectsRoute
   '/skills': typeof SkillsRoute
+  '/tools': typeof ToolsRoute
   '/writing': typeof WritingRoute
   '/admin/about': typeof AdminAboutRoute
   '/admin/achievements': typeof AdminAchievementsRoute
@@ -253,6 +262,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/projects'
     | '/skills'
+    | '/tools'
     | '/writing'
     | '/admin/about'
     | '/admin/achievements'
@@ -279,6 +289,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/projects'
     | '/skills'
+    | '/tools'
     | '/writing'
     | '/admin/about'
     | '/admin/achievements'
@@ -306,6 +317,7 @@ export interface FileRouteTypes {
     | '/login'
     | '/projects'
     | '/skills'
+    | '/tools'
     | '/writing'
     | '/admin/about'
     | '/admin/achievements'
@@ -334,6 +346,7 @@ export interface RootRouteChildren {
   LoginRoute: typeof LoginRoute
   ProjectsRoute: typeof ProjectsRoute
   SkillsRoute: typeof SkillsRoute
+  ToolsRoute: typeof ToolsRoute
   WritingRoute: typeof WritingRoute
 }
 
@@ -393,6 +406,13 @@ declare module '@tanstack/react-router' {
       path: '/skills'
       fullPath: '/skills'
       preLoaderRoute: typeof SkillsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tools': {
+      id: '/tools'
+      path: '/tools'
+      fullPath: '/tools'
+      preLoaderRoute: typeof ToolsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/writing': {
@@ -566,6 +586,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginRoute: LoginRoute,
   ProjectsRoute: ProjectsRoute,
   SkillsRoute: SkillsRoute,
+  ToolsRoute: ToolsRoute,
   WritingRoute: WritingRoute,
 }
 export const routeTree = rootRouteImport

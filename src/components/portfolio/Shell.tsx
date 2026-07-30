@@ -44,7 +44,7 @@ export function Shell({ children }: ShellProps) {
     { label: "Projects", path: "/projects", key: "projects" },
     { label: "Writing", path: "/writing", key: "blogs" },
     { label: "Journey", path: "/journey", key: "journey" },
-    { label: "Contact", path: "/contact", key: "contact" },
+    { label: "Tools", path: "/tools", key: "tools" },
   ];
 
   const navItems = allNavItems.filter((item) => {
