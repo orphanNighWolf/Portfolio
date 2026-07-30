@@ -1,0 +1,35 @@
+{
+  "name": "job-match-engine",
+  "version": "1.0.0",
+  "description": "Production-grade, zero-browser-automation job matching and deduplication pipeline engine.",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "health-check": "tsx src/config/health-check.ts",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"src/**/*.ts\""
+  },
+  "keywords": [
+    "job-matching",
+    "gmail-api",
+    "deduplication",
+    "typescript",
+    "automation"
+  ],
+  "author": "Aniket Saini",
+  "license": "MIT",
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@typescript-eslint/eslint-plugin": "^7.0.0",
+    "@typescript-eslint/parser": "^7.0.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.2.5",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}
